@@ -424,6 +424,8 @@
   <ItemGroup />
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
+    <ClCompile Include="source\BaseApp.cpp" />
+    <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="guup_enigne.fx">
@@ -436,6 +438,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BaseApp.h" />
+    <ClInclude Include="include\PreRequisitos.h" />
+    <ClInclude Include="include\Resource.h" />
+    <ClInclude Include="include\Window.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="guup_enigne.rc" />
   </ItemGroup>

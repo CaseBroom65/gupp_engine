@@ -26,6 +26,9 @@
     <ClCompile Include="source\Window.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Device.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
@@ -52,6 +55,9 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Window.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Device.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

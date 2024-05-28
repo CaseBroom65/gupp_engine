@@ -1,8 +1,10 @@
 #pragma once
 //librerias STD
 #include <windows.h>
+#include <sstream>
 #include <xnamath.h>
 #include <string>
+
 //Librerias DirectX
 #include <d3d11.h>
 #include <d3dx11.h>
@@ -10,3 +12,25 @@
 #include "resource.h"
 //Third Parties
 
+// MACRO for safe release of resources
+#define SAFE_RELEASE(x) if(x != nullptr) x->Release(); x = nullptr;
+
+#define WARNING( s )                         \
+{                                            \
+   std::wostringstream os_;                  \
+   os_ << s;                                 \
+   OutputDebugStringW( os_.str().c_str() );  \
+}
+#define MESSAGE( classObj, method, state )   \
+{                                            \
+   std::wostringstream os_;                  \
+   os_ << classObj << "::" << method << " : " << "[CREATION OF RESOURCE " << ": " << state << "] \n"; \
+   OutputDebugStringW( os_.str().c_str() );  \
+}
+
+#define ERROR( classObj, method, errorMSG )   \
+{                                            \
+   std::wostringstream os_;                  \
+   os_ << "ERROR : " << classObj << "::" << method << " : " << "  Error in data from params [" << errorMSG << "] \n"; \
+   OutputDebugStringW( os_.str().c_str() );  \
+}

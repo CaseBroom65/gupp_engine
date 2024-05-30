@@ -29,6 +29,9 @@
     <ClCompile Include="source\Device.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\DeviceContext.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
@@ -58,6 +61,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="include\Device.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DeviceContext.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\swap chain.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

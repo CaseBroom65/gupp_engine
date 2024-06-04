@@ -79,7 +79,7 @@ HRESULT Device::CreateDepthStencilView(ID3D11Resource* pResource,
 	return hr;
 }
 
-HRESULT __stdcall Device::CreateVertexShader(const void* pShaderBytecode, 
+HRESULT Device::CreateVertexShader(const void* pShaderBytecode, 
 											unsigned int BytecodeLength, 
 											ID3D11ClassLinkage* pClassLinkage, 
 											ID3D11VertexShader** ppVertexShader)

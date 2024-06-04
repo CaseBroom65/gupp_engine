@@ -4,7 +4,7 @@
 //Forward Declarations - declaraciones Directas
 class Device;
 class DeviceContext;
-class Window;
+class window;
 class Texture;
 
 class SwapChain
@@ -14,7 +14,7 @@ public:
 	~SwapChain()=default;
 
 
-	void init(Device &device, DeviceContext &deviceContext, Texture &backBuffer, Window window);
+	void init(Device &device, DeviceContext &deviceContext, Texture &backBuffer, window window);
 
 	void update();
 

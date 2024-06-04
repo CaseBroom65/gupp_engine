@@ -25,7 +25,7 @@ public:
 	HRESULT CreateDepthStencilView(ID3D11Resource* pResource,
 		const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc,
 		ID3D11DepthStencilView** ppDepthStencilView);
-	HRESULT STDMETHODCALLTYPE CreateVertexShader(const void* pShaderBytecode,
+	HRESULT  CreateVertexShader(const void* pShaderBytecode,
 												unsigned int BytecodeLength,
 												ID3D11ClassLinkage* pClassLinkage,
 												ID3D11VertexShader** ppVertexShader);

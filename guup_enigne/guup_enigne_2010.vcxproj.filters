@@ -36,6 +36,9 @@
     <ClCompile Include="source\Texture.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\depthstencilView.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
@@ -74,6 +77,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="include\Texture.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\depthstencilView.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

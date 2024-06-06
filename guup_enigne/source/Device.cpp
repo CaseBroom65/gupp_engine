@@ -16,10 +16,21 @@ void Device::destroy()
 {
 	SAFE_RELEASE(m_device);
 }
-
+/// <summary>
+/// Input Layout in DirectX 11 is a description of the vertex data that will be sent to the graphics pipeline.
+///  It specifies the format and location of the data in the vertex buffers.
+///  Constant Buffers in DirectX 11 are blocks of memory that hold data that remains constant for a set of rendering operations,
+///  such as matrices, lighting parameters, or material properties. CreateRenderTargetView in DirectX 11 is a method that creates a render target view object,
+///  which represents a resource that can be used as the target for rendering operations.
+///  This allows the application to write rendering output to a specific resource.
+/// </summary>
+/// <param name="pResource"></param>
+/// <param name="pDesc"></param>
+/// <param name="ppRTView"></param>
+/// <returns></returns>
 HRESULT Device::CreateRenderTargetView(ID3D11Resource* pResource,
 									   const D3D11_RENDER_TARGET_VIEW_DESC* pDesc,
-										ID3D11RenderTargetView** ppRTView)
+										ID3D11RenderTargetView** ppRTView) //son parametros estos sierven para pasar información
 {
 	HRESULT hr = S_OK;
 	//check if the resource and RTView exist

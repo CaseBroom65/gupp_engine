@@ -429,7 +429,9 @@
     <ClCompile Include="source\depthstencilView.cpp" />
     <ClCompile Include="source\Device.cpp" />
     <ClCompile Include="source\DeviceContext.cpp" />
+    <ClCompile Include="source\RenderTargetView.cpp" />
     <ClCompile Include="source\Texture.cpp" />
+    <ClCompile Include="source\viewPort.cpp" />
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -448,9 +450,11 @@
     <ClInclude Include="include\Device.h" />
     <ClInclude Include="include\DeviceContext.h" />
     <ClInclude Include="include\PreRequisitos.h" />
+    <ClInclude Include="include\RenderTargetView.h" />
     <ClInclude Include="include\Resource.h" />
     <ClInclude Include="include\swap chain.h" />
     <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\ViewPort.h" />
     <ClInclude Include="include\Window.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="guup_enigne.rc" />

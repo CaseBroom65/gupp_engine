@@ -39,6 +39,12 @@
     <ClCompile Include="source\depthstencilView.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\RenderTargetView.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\viewPort.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
@@ -80,6 +86,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="include\depthstencilView.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RenderTargetView.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ViewPort.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

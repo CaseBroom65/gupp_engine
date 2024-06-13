@@ -17,3 +17,16 @@ void DeviceContext::PSSetShaderResources(unsigned int StartSlot, unsigned int Nu
 		m_deviceContext->PSSetShaderResources(StartSlot, NumViews, ppShaderResourceViews);
 	}
 }
+void DeviceContext::RSSetViewports(unsigned int NumViewports, const D3D11_VIEWPORT* pViewports)
+{
+
+	if (pViewports == nullptr)
+	{
+		ERROR("DeviceContext", "RSSetViewports", "CHECK for const D3D11_VIEWPORT* pViewports")
+			exit(1);
+	}
+	else
+	{
+		m_deviceContext->RSSetViewports(NumViewports, pViewports);
+	}
+}

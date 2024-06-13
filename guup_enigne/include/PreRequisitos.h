@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <sstream>
 #include <xnamath.h>
+#include <vector>
 #include <string>
 
 //Librerias DirectX

@@ -56,3 +56,8 @@ struct CBChangesEveryFrame
 	XMMATRIX mWorld;
 	XMFLOAT4 vMeshColor;
 };
+enum ShaderType
+{
+	PIXEL_SHADER = 0,
+	VERTEX_SHADER = 1
+};

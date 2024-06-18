@@ -11,7 +11,7 @@ public:
 	ShaderProgram() = default;
 	~ShaderProgram() = default;
 
-	void init(Device Device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
+	void init(Device device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
 
 	void update();
 
@@ -22,18 +22,14 @@ public:
 	HRESULT CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint,
 		LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
-	void CreateVertexShader(Device device);
-
 	void CreateInputLayout(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
 
-	void CreatePixelShader(Device device);
-
-	void Createshader(Device device, void* shaderClass);
+	void CreateShader(Device device, ShaderType type);
 
 public:
-	ID3D11VertexShader* m_VertexSahder = nullptr;
-	ID3D11PixelShader* m_PixelSahder = nullptr;
-	InputLayout m_inpuLayout;
+	ID3D11VertexShader* m_VertexShader = nullptr;
+	ID3D11PixelShader* m_PixelShader = nullptr;
+	InputLayout m_inputLayout;
 
 private:
 	std::string m_shaderFileName;

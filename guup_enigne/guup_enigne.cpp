@@ -14,7 +14,7 @@
 #include "depthstencilView.h"
 #include "RenderTargetView.h"
 #include "ViewPort.h"
-#include "InputLayout.h"
+#include "ShaderProgram.h"
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -35,11 +35,8 @@ Texture									g_DepthStencil;
 DepthStencilView						g_depthStencilView;
 RenderTargetView						g_RenderTargetView;
 Viewport								g_viewport;
-InputLayout								g_InputLayout;
-IDXGISwapChain* g_pSwapChain = NULL;
-ID3D11VertexShader* g_pVertexShader = NULL;
-ID3D11PixelShader* g_pPixelShader = NULL;
-//ID3D11InputLayout* g_pVertexLayout = NULL;
+ShaderProgram							g_shaderProgram;
+
 ID3D11Buffer* g_pVertexBuffer = NULL;
 ID3D11Buffer* g_pIndexBuffer = NULL;
 ID3D11Buffer* g_pCBNeverChanges = NULL;
@@ -218,23 +215,23 @@ HRESULT InitDevice()
 	g_viewport.init(g_window);
 
 	// Compile the vertex shader
-	ID3DBlob* pVSBlob = NULL;
-	hr = CompileShaderFromFile("guup_enigne.fx", "VS", "vs_4_0", &pVSBlob);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL,
-			"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK);
-		return hr;
-	}
+	//ID3DBlob* pVSBlob = NULL;
+	//hr = CompileShaderFromFile("guup_enigne.fx", "VS", "vs_4_0", &pVSBlob);
+	//if (FAILED(hr))
+	//{
+	//	MessageBox(NULL,
+	//		"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK);
+	//	return hr;
+	//}
 
 	// Create the vertex shader
 	//hr = g_device.m_device->CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, &g_pVertexShader);
-	hr = g_device.CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), nullptr, &g_pVertexShader);
+	/*hr = g_device.CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), nullptr, &g_pVertexShader);
 	if (FAILED(hr))
 	{
 		pVSBlob->Release();
 		return hr;
-	}
+	}*/
 
 	//define the inputLayout
 	std::vector<D3D11_INPUT_ELEMENT_DESC>Layout;
@@ -258,28 +255,29 @@ HRESULT InitDevice()
 	texcoord.InstanceDataStepRate = 0;
 	Layout.push_back(texcoord);
 
-	g_InputLayout.init(g_device, Layout, pVSBlob);
+	g_shaderProgram.init(g_device, "guup_enigne.fx", Layout);
 
-	// Set the input layout
-	//g_deviceContext.m_deviceContext->IASetInputLayout(g_pVertexLayout);
+	///g_InputLayout.init(g_device, Layout, pVSBlob);
+	//// Set the input layout
+	////g_deviceContext.m_deviceContext->IASetInputLayout(g_pVertexLayout);
 
-	// Compile the pixel shader
-	ID3DBlob* pPSBlob = NULL;
-	hr = CompileShaderFromFile("guup_enigne.fx", "PS", "ps_4_0", &pPSBlob);
-	if (FAILED(hr))
-	{
-		MessageBox(NULL,
-			"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK);
-		return hr;
-	}
+	//// Compile the pixel shader
+	//ID3DBlob* pPSBlob = NULL;
+	//hr = CompileShaderFromFile("guup_enigne.fx", "PS", "ps_4_0", &pPSBlob);
+	//if (FAILED(hr))
+	//{
+	//	MessageBox(NULL,
+	//		"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK);
+	//	return hr;
+	//}
 
-	// Create the pixel shader
-	//hr = g_device.m_device->CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, &g_pPixelShader);
+	//// Create the pixel shader
+	////hr = g_device.m_device->CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, &g_pPixelShader);
+	////pPSBlob->Release();
+	//hr = g_device.CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), nullptr, &g_pPixelShader);
 	//pPSBlob->Release();
-	hr = g_device.CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), nullptr, &g_pPixelShader);
-	pPSBlob->Release();
-	if (FAILED(hr))
-		return hr;
+	//if (FAILED(hr))
+	//	return hr;
 
 	// Create vertex buffer
 	SimpleVertex vertices[] =
@@ -453,23 +451,14 @@ void CleanupDevice()
 	if (g_pCBChangesEveryFrame) g_pCBChangesEveryFrame->Release();
 	if (g_pVertexBuffer) g_pVertexBuffer->Release();
 	if (g_pIndexBuffer) g_pIndexBuffer->Release();
-	//if (g_pVertexLayout) g_pVertexLayout->Release();
-	g_InputLayout.destroy();
-	if (g_pVertexShader) g_pVertexShader->Release();
-	if (g_pPixelShader) g_pPixelShader->Release();
-	//if (g_pDepthStencil) g_pDepthStencil->Release();
+	g_shaderProgram.destroy();
 	g_DepthStencil.destroy();
-	//if (g_pDepthStencilView) g_pDepthStencilView->Release();
 	g_depthStencilView.destroy();
 	g_RenderTargetView.destroy();
-	//if (g_pRenderTargetView) g_pRenderTargetView->Release();
-	//if (g_pSwapChain) g_pSwapChain->Release();
-	//if (g_deviceContext.m_deviceContext) g_deviceContext.m_deviceContext->Release();
+
 	g_swapchain.destroy();
 	g_deviceContext.destroy();
 	g_device.destroy();
-
-	//if (g_device.m_device) g_device.m_device->Release();
 }
 
 
@@ -551,12 +540,13 @@ void Render()
 	//
 	// Render the cube
 	//
-	g_InputLayout.render(g_deviceContext);
-	g_deviceContext.m_deviceContext->VSSetShader(g_pVertexShader, NULL, 0);
+	//g_InputLayout.render(g_deviceContext);
+	//g_deviceContext.m_deviceContext->VSSetShader(g_pVertexShader, NULL, 0);
+	//g_deviceContext.m_deviceContext->PSSetShader(g_pPixelShader, NULL, 0);
+	g_shaderProgram.render(g_deviceContext);
 	g_deviceContext.m_deviceContext->VSSetConstantBuffers(0, 1, &g_pCBNeverChanges);
 	g_deviceContext.m_deviceContext->VSSetConstantBuffers(1, 1, &g_pCBChangeOnResize);
 	g_deviceContext.m_deviceContext->VSSetConstantBuffers(2, 1, &g_pCBChangesEveryFrame);
-	g_deviceContext.m_deviceContext->PSSetShader(g_pPixelShader, NULL, 0);
 	g_deviceContext.m_deviceContext->PSSetConstantBuffers(2, 1, &g_pCBChangesEveryFrame);
 	g_deviceContext.m_deviceContext->PSSetShaderResources(0, 1, &g_pTextureRV);
 	g_deviceContext.m_deviceContext->PSSetSamplers(0, 1, &g_pSamplerLinear);

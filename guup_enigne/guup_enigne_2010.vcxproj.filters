@@ -51,6 +51,9 @@
     <ClCompile Include="source\ShaderProgram.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Buffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guup_enigne.cpp" />
@@ -104,6 +107,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="include\ShaderProgram.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Buffer.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

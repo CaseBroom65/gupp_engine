@@ -16,7 +16,7 @@
 #include "ViewPort.h"
 #include "ShaderProgram.h"
 #include "Buffer.h"
-
+#include "SampleState.h"
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -44,15 +44,17 @@ Buffer									g_CBBufferNeverChanges;
 Buffer									g_CBBufferChangeOnResize;
 Buffer									g_CBBufferChangesEveryFrame;
 Mesh									g_mesh;
+Texture									g_modelTexture;
+SamplerState							g_sampler;
 
-ID3D11ShaderResourceView* g_pTextureRV = NULL;
-ID3D11SamplerState* g_pSamplerLinear = NULL;
 
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
 XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
-
+CBNeverChanges                      cbNeverChanges;
+CBChangeOnResize                    cbChangesOnResize;
+CBChangesEveryFrame                 cb;
 
 //--------------------------------------------------------------------------------------
 // Forward declarations
@@ -63,6 +65,7 @@ void CleanupDevice();
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 void Render();
 
+void Update(float DeltaTime);
 
 //--------------------------------------------------------------------------------------
 // Entry point to the program. Initializes everything and goes into a message processing 
@@ -93,6 +96,22 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		else
 		{
+			// Update our time
+			static float t = 0.0f;
+			if (g_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
+			{
+				t += (float)XM_PI * 0.0125f;
+			}
+			else
+			{
+				static DWORD dwTimeStart = 0;
+				DWORD dwTimeCur = GetTickCount();
+				if (dwTimeStart == 0)
+					dwTimeStart = dwTimeCur;
+				t = (dwTimeCur - dwTimeStart) / 1000.0f;
+			}
+
+			Update(t);
 			Render();
 		}
 	}
@@ -361,24 +380,9 @@ HRESULT InitDevice()
 
 
 	// Load the Texture
-	hr = D3DX11CreateShaderResourceViewFromFile(g_device.m_device, "seafloor.dds", NULL, NULL, &g_pTextureRV, NULL);
-	if (FAILED(hr))
-		return hr;
-
-	// Create the sample state
-	D3D11_SAMPLER_DESC sampDesc;
-	ZeroMemory(&sampDesc, sizeof(sampDesc));
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	sampDesc.MinLOD = 0;
-	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	//hr = g_device.m_device->CreateSamplerState(&sampDesc, &g_pSamplerLinear);
-	hr= g_device.CreateSamplerState(&sampDesc, &g_pSamplerLinear);
-	if (FAILED(hr))
-		return hr;
+	g_modelTexture.init(g_device, "seafloor.dds");
+	//Create SamplerState
+	g_sampler.init(g_device);
 
 	// Initialize the world matrices
 	g_World = XMMatrixIdentity();
@@ -389,9 +393,8 @@ HRESULT InitDevice()
 	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	g_View = XMMatrixLookAtLH(Eye, At, Up);
 
-	CBNeverChanges cbNeverChanges;
 	cbNeverChanges.mView = XMMatrixTranspose(g_View);
-	g_CBBufferNeverChanges.update(g_deviceContext, 0, nullptr, &cbNeverChanges, 0, 0); 
+
 
 	// Initialize the projection matrix
 	g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, g_window.m_width / (FLOAT)g_window.m_height, 0.01f, 100.0f);
@@ -411,8 +414,9 @@ void CleanupDevice()
 {
 	if (g_deviceContext.m_deviceContext) g_deviceContext.m_deviceContext->ClearState();
 
-	if (g_pSamplerLinear) g_pSamplerLinear->Release();
-	if (g_pTextureRV) g_pTextureRV->Release();
+
+	g_sampler.destroy();
+	g_modelTexture.destroy();
 	g_shaderProgram.destroy();
 	g_DepthStencil.destroy();
 	g_depthStencilView.destroy();
@@ -426,33 +430,48 @@ void CleanupDevice()
 	g_vertexBuffer.destroy();
 	g_indexBuffer.destroy();
 }
-
+//Update everyframe
+void Update(float DeltaTime)
+{
+	// Rotate cube around the origin
+	g_World = XMMatrixRotationY(DeltaTime);
+	// Modify the color
+	g_vMeshColor.x = (sinf(DeltaTime * 1.0f) + 1.0f) * 0.5f;
+	g_vMeshColor.y = (cosf(DeltaTime * 3.0f) + 1.0f) * 0.5f;
+	g_vMeshColor.z = (sinf(DeltaTime * 5.0f) + 1.0f) * 0.5f;
+	//Update Constant Buffers
+	g_CBBufferNeverChanges.update(g_deviceContext, 0, nullptr, &cbNeverChanges, 0, 0);
+	g_CBBufferChangeOnResize.update(g_deviceContext, 0, nullptr, &cbChangesOnResize, 0, 0);
+	cb.mWorld = XMMatrixTranspose(g_World);
+	cb.vMeshColor = g_vMeshColor;
+	g_CBBufferChangesEveryFrame.update(g_deviceContext, 0, nullptr, &cb, 0, 0);
+}
 
 //--------------------------------------------------------------------------------------
 // Called every time the application receives a message
 //--------------------------------------------------------------------------------------
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	PAINTSTRUCT ps;
-	HDC hdc;
-
-	switch (message)
-	{
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-		break;
-
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-
-	return 0;
-}
+//LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+//{
+//	PAINTSTRUCT ps;
+//	HDC hdc;
+//
+//	switch (message)
+//	{
+//	case WM_PAINT:
+//		hdc = BeginPaint(hWnd, &ps);
+//		EndPaint(hWnd, &ps);
+//		break;
+//
+//	case WM_DESTROY:
+//		PostQuitMessage(0);
+//		break;
+//
+//	default:
+//		return DefWindowProc(hWnd, message, wParam, lParam);
+//	}
+//
+//	return 0;
+//}
 
 
 //--------------------------------------------------------------------------------------
@@ -460,32 +479,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //--------------------------------------------------------------------------------------
 void Render()
 {
-	// Update our time
-	static float t = 0.0f;
-	if (g_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
-	{
-		t += (float)XM_PI * 0.0125f;
-	}
-	else
-	{
-		static DWORD dwTimeStart = 0;
-		DWORD dwTimeCur = GetTickCount();
-		if (dwTimeStart == 0)
-			dwTimeStart = dwTimeCur;
-		t = (dwTimeCur - dwTimeStart) / 1000.0f;
-	}
-
-	// Rotate cube around the origin
-	g_World = XMMatrixRotationY(t);
-
-	// Modify the color
-	g_vMeshColor.x = (sinf(t * 1.0f) + 1.0f) * 0.5f;
-	g_vMeshColor.y = (cosf(t * 3.0f) + 1.0f) * 0.5f;
-	g_vMeshColor.z = (sinf(t * 5.0f) + 1.0f) * 0.5f;
-
-	//
 	// Clear the back buffer
-	//
+	
 	float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
 	g_RenderTargetView.render(g_deviceContext,g_depthStencilView,1,ClearColor);
 
@@ -495,28 +490,17 @@ void Render()
 	//
 	//g_deviceContext.m_deviceContext->ClearDepthStencilView(g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	g_depthStencilView.render(g_deviceContext);
-	//
-	// Update variables that change once per frame
-	//
-	CBChangesEveryFrame cb;
-	cb.mWorld = XMMatrixTranspose(g_World);
-	cb.vMeshColor = g_vMeshColor;
-	g_CBBufferChangesEveryFrame.update(g_deviceContext, 0, nullptr, &cb, 0, 0);
-
-	//
 	// Render the cube
 	//
-	//g_InputLayout.render(g_deviceContext);
-	//g_deviceContext.m_deviceContext->VSSetShader(g_pVertexShader, NULL, 0);
-	//g_deviceContext.m_deviceContext->PSSetShader(g_pPixelShader, NULL, 0);
 	g_shaderProgram.render(g_deviceContext);
 	g_vertexBuffer.render(g_deviceContext, 0, 1);
 	g_indexBuffer.render(g_deviceContext, DXGI_FORMAT_R32_UINT);
 	g_CBBufferNeverChanges.render(g_deviceContext, 0, 1); // Slot 0
 	g_CBBufferChangeOnResize.render(g_deviceContext, 1, 1); // Slot 1
 	g_CBBufferChangesEveryFrame.renderModel(g_deviceContext, 2, 1); // Slot 2
-	g_deviceContext.m_deviceContext->PSSetShaderResources(0, 1, &g_pTextureRV);
-	g_deviceContext.m_deviceContext->PSSetSamplers(0, 1, &g_pSamplerLinear);
+	g_modelTexture.render(g_deviceContext, 0, 1);
+	//g_deviceContext.m_deviceContext->PSSetShaderResources( 0, 1, &g_pTextureRV );
+	g_sampler.render(g_deviceContext, 0, 1);
 	//Set primitve topology
 	g_deviceContext.m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 

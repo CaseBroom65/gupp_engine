@@ -17,7 +17,8 @@
 #include "ShaderProgram.h"
 #include "Buffer.h"
 #include "SampleState.h"
-
+#include "ModelLoader.h"
+#include "fbxsdk.h"
 //--------------------------------------------------------------------------------------
 // Structures
 //--------------------------------------------------------------------------------------
@@ -46,6 +47,7 @@ Buffer									g_CBBufferChangesEveryFrame;
 Mesh									g_mesh;
 Texture									g_modelTexture;
 SamplerState							g_sampler;
+ModelLoader								g_model;
 
 
 XMMATRIX                            g_World;
@@ -166,59 +168,6 @@ HRESULT CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint, LPCSTR szSh
 HRESULT InitDevice()
 {
 	HRESULT hr = S_OK;
-
-	/*
-		UINT createDeviceFlags = 0;
-	#ifdef _DEBUG
-		createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-	#endif
-
-		D3D_DRIVER_TYPE driverTypes[] =
-		{
-			D3D_DRIVER_TYPE_HARDWARE,
-			D3D_DRIVER_TYPE_WARP,
-			D3D_DRIVER_TYPE_REFERENCE,
-		};
-		UINT numDriverTypes = ARRAYSIZE(driverTypes);
-
-		D3D_FEATURE_LEVEL featureLevels[] =
-		{
-			D3D_FEATURE_LEVEL_11_0,
-			D3D_FEATURE_LEVEL_10_1,
-			D3D_FEATURE_LEVEL_10_0,
-		};
-		UINT numFeatureLevels = ARRAYSIZE(featureLevels);
-
-		DXGI_SWAP_CHAIN_DESC sd;
-		ZeroMemory(&sd, sizeof(sd));
-		sd.BufferCount = 1;
-		sd.BufferDesc.Width = g_window.m_width;
-		sd.BufferDesc.Height = g_window.m_height;
-		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		sd.BufferDesc.RefreshRate.Numerator = 60;
-		sd.BufferDesc.RefreshRate.Denominator = 1;
-		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		sd.OutputWindow = g_window.m_hWnd;
-		sd.SampleDesc.Count = 1;
-		sd.SampleDesc.Quality = 0;
-		sd.Windowed = TRUE;
-
-		for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
-		{
-			g_driverType = driverTypes[driverTypeIndex];
-			hr = D3D11CreateDeviceAndSwapChain(NULL, g_driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
-				D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_device.m_device, &g_featureLevel, &g_deviceContext.m_deviceContext);
-			if (SUCCEEDED(hr))
-				break;
-		}
-		if (FAILED(hr))
-			return hr;*/
-
-			// Create a render target view
-			//hr = g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-			// //if (FAILED(hr))
-				//return hr;
-			
 	//create Swapchain
 	g_swapchain.init(g_device, g_deviceContext, g_BackBuffer, g_window);
 
@@ -282,50 +231,11 @@ HRESULT InitDevice()
 
 	g_shaderProgram.init(g_device, "guup_enigne.fx", Layout);
 
-
-
-
-	// Create vertex buffer
-	SimpleVertex vertices[] =
-	{
-		{ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
-
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
-
-		{ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
-
-		{ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
-
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT2(0.0f, 1.0f) },
-
-		{ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT2(0.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT2(1.0f, 0.0f) },
-		{ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f) },
-		{ XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
-	};
-
-	g_mesh.name = "Cube";
-
-	// Set vertex buffer
-	for (const SimpleVertex& vertex : vertices)
-	{
+	//load model
+	g_model.LoadModel("Models/Vela2.fbx");
+	/* {
 		g_mesh.vertex.push_back(vertex);
-	}
+	}*/
 
 	//// NOTA: El static_cast<unsigned int›
 	//se está utilizando aquí para convertir el resultado del método size() 
@@ -337,38 +247,14 @@ HRESULT InitDevice()
 	g_mesh.numVertex = static_cast<unsigned int>(g_mesh.vertex.size());
 
 
-	// Create vertex buffer
-	g_vertexBuffer.init(g_device, g_mesh, D3D11_BIND_VERTEX_BUFFER);
+	//// Create vertex buffer
+	//g_vertexBuffer.init(g_device, g_mesh, D3D11_BIND_VERTEX_BUFFER);
 
-	// Create index buffer
-	unsigned int indices[] =
-	{
-		3,1,0,
-		2,1,3,
+	//g_mesh.index = g_model.GetIndices();
+	//g_mesh.numIndex = static_cast<unsigned int>(g_mesh.index.size());
 
-		6,4,5,
-		7,4,6,
-
-		11,9,8,
-		10,9,11,
-
-		14,12,13,
-		15,12,14,
-
-		19,17,16,
-		18,17,19,
-
-		22,20,21,
-		23,20,22
-	};
-
-	for (unsigned int index : indices) {
-		g_mesh.index.push_back(index);
-	}
-	g_mesh.numIndex = static_cast<unsigned int>(g_mesh.index.size());
-
-	// Set index buffer
-	g_indexBuffer.init(g_device, g_mesh, D3D11_BIND_INDEX_BUFFER);
+	//// Set index buffer
+	//g_indexBuffer.init(g_device, g_mesh, D3D11_BIND_INDEX_BUFFER);
 
 	// Inicialización de Constant Buffers
 	g_CBBufferNeverChanges.init(g_device, sizeof(CBNeverChanges));

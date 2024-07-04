@@ -53,14 +53,14 @@ bool ModelLoader::LoadModel(const std::string& filePath)
 	{
 		for (int i = 0; i < lrootNode->GetChildCount(); i++)
 		{
-			ProcessNode(lrootNode->GetChildCount(i));
+			ProcessNode(lrootNode);
 		}
 	}
 
 
 	//procesar Materiales
 	int materialCount = lScene->GetMaterialCount();
-	for (int i = 0; i < materialCount; i++)
+	for (int i = 0; i < materialCount; ++i)
 	{
 		FbxSurfaceMaterial* material = lScene->GetMaterial(i);
 		ProcessMaterial(material);
@@ -89,6 +89,10 @@ void ModelLoader::ProcessMesh(FbxNode* node)
 {
 	FbxMesh* mesh = node->GetMesh();
 	if (!mesh) return;
+
+	std::vector<SimpleVertex> vertices;
+	std::vector<UINT> indices;
+
 
 	// Procesar vértices y normales
 	for (int i = 0; i < mesh->GetControlPointsCount(); i++) {
@@ -159,13 +163,13 @@ void ModelLoader::ProcessMaterial(FbxSurfaceMaterial* material)
 		FbxProperty prop = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
 		if (prop.IsValid())
 		{
-			int textureCount = prop.GetSrcObjectCount<FbxTexture>();
-			for (int i = 0; i < textureCount; i++)
+			int textureCount = prop.GetSrcObjectCount < FbxTexture>();
+			for (int i = 0; i < textureCount; ++i)
 			{
 				FbxTexture* texture = FbxCast<FbxTexture>(prop.GetSrcObject<FbxTexture>(i));
 				if (texture)
 				{
-					textureFileNames.push_back(texture->GetName());
+					textureFileName.push_back(texture->GetName());
 				}
 			}
 		}

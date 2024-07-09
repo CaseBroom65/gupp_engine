@@ -10,7 +10,7 @@ public:
 	Texture() = default;
 	~Texture() = default;
 
-	HRESULT init(Device device, std::string TextureName);
+	HRESULT init(Device device, std::string TextureName, ExtensionType extensionType);
 
 	void init(Device device, unsigned int width, unsigned int height, DXGI_FORMAT Format, unsigned int Bindflags);
 	

@@ -49,6 +49,7 @@ std::vector<Texture>					modelTextures;
 SamplerState							g_sampler;
 ModelLoader								g_model;
 Texture									g_default;
+std::vector<Texture>gridTexs;
 
 
 XMMATRIX                            g_World;
@@ -180,7 +181,7 @@ HRESULT InitDevice()
 	g_DepthStencil.init(g_device, g_window.m_width
 		, g_window.m_height,
 		DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_DEPTH_STENCIL);
-	
+
 
 	// Create the depth stencil view
 	g_depthStencilView.init(g_device, g_DepthStencil, DXGI_FORMAT_D24_UNORM_S8_UINT);
@@ -286,16 +287,42 @@ HRESULT InitDevice()
 
 	g_CBBufferChangesEveryFrame.init(g_device, sizeof(CBChangesEveryFrame));
 
-
-	// Load the Texture
-	g_default.init(g_device, "Textures/Default.png");
-	//g_modelTexture.init(g_device, "seafloor.dds");
-	
 	//Create SamplerState
 	g_sampler.init(g_device);
 
 	// Initialize the world matrices
 	g_World = XMMatrixIdentity();
+
+	// Load the Texture
+	Texture Vela_Char_BaseColor;
+	Vela_Char_BaseColor.init(g_device, "Textures/Vela/Vela_Char_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Corneas_BaseColor;
+	Vela_Corneas_BaseColor.init(g_device, "Textures/Vela/Vela_Corneas_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Gun_BaseColor;
+	Vela_Gun_BaseColor.init(g_device, "Textures/Vela/Vela_Gun_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Legs_BaseColor;
+	Vela_Legs_BaseColor.init(g_device, "Textures/Vela/Vela_Legs_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Mechanical_BaseColor;
+	Vela_Mechanical_BaseColor.init(g_device, "Textures/Vela/Vela_Mechanical_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Plate_BaseColor;
+	Vela_Plate_BaseColor.init(g_device, "Textures/Vela/Vela_Plate_BaseColor.png", ExtensionType::PNG);
+
+	Texture Vela_Visor_BaseColor;
+	Vela_Visor_BaseColor.init(g_device, "Textures/Vela/Vela_Visor_BaseColor.png", ExtensionType::PNG);
+
+	modelTextures.push_back(Vela_Corneas_BaseColor);		//1
+	modelTextures.push_back(Vela_Gun_BaseColor);			//2
+	modelTextures.push_back(Vela_Visor_BaseColor);			//3
+	modelTextures.push_back(Vela_Legs_BaseColor);			//4
+	modelTextures.push_back(Vela_Mechanical_BaseColor);		//5
+	modelTextures.push_back(Vela_Char_BaseColor);			//6
+	modelTextures.push_back(Vela_Plate_BaseColor);			//7
+	g_default.init(g_device, "Textures/Default.png", ExtensionType::PNG);
 
 	// Initialize the view matrix
 	XMVECTOR Eye = XMVectorSet(0.0f, 3.0f, -6.0f, 0.0f);
@@ -334,6 +361,7 @@ void CleanupDevice()
 	g_CBBufferNeverChanges.destroy();
 	g_CBBufferChangeOnResize.destroy();
 	g_CBBufferChangesEveryFrame.destroy();
+
 	for (auto& vertexBuffer : g_vertexBuffers)
 	{
 		vertexBuffer.destroy();
@@ -381,11 +409,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void Update(float DeltaTime)
 {
 	// Rotate cube around the origin
-	g_World = XMMatrixRotationZ(DeltaTime);
-	// Modify the color
-	/*g_vMeshColor.y = (cosf(DeltaTime * 3.0f) + 1.0f) * 0.5f;
-	g_vMeshColor.z = (sinf(DeltaTime * 5.0f) + 1.0f) * 0.5f;*/
-	//Update Constant Buffers
+	XMVECTOR translation = XMVectorSet(0.0f, -2.0f, 0.0f, 0.0f); // Traslación en x=1, y=2, z=3
+	XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(XMConvertToRadians(260), XMConvertToRadians(DeltaTime * 50), 0.0f); // Rotación en X=180, Y=180, Z=0
+	XMVECTOR scale = XMVectorSet(.03f, .03f, .03f, 0.0f); // Escala por 2 en x, y, z
+
+	// Combinar las transformaciones en una matriz de mundo
+	g_World = XMMatrixScalingFromVector(scale) * XMMatrixRotationQuaternion(rotation) * XMMatrixTranslationFromVector(translation);
+	//update constant buffer
 	g_CBBufferNeverChanges.update(g_deviceContext, 0, nullptr, &cbNeverChanges, 0, 0);
 	g_CBBufferChangeOnResize.update(g_deviceContext, 0, nullptr, &cbChangesOnResize, 0, 0);
 	cb.mWorld = XMMatrixTranspose(g_World);
@@ -409,23 +439,23 @@ void Render()
 	//
 	//g_deviceContext.m_deviceContext->ClearDepthStencilView(g_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	g_depthStencilView.render(g_deviceContext);
-	// Render the model
-	//
+
+	//render cube
 	g_shaderProgram.render(g_deviceContext);
+	// Render the model
 	for (size_t i = 0; i < g_model.meshes.size(); i++)
 	{
 		g_vertexBuffers[i].render(g_deviceContext, 0, 1);
 		g_indexBuffers[i].render(g_deviceContext, DXGI_FORMAT_R32_UINT);
-		/*if (i < modelTextures.size() - 1)
+		if (i <= modelTextures.size() - 1)
 		{
 			modelTextures[i].render(g_deviceContext, 0, 1);
 		}
 		else
 		{
 			g_default.render(g_deviceContext, 0, 1);
-		}*/
-
-		g_default.render(g_deviceContext, 0, 1);
+		}
+		//g_default.render(g_deviceContext, 0, 1);
 
 		g_sampler.render(g_deviceContext, 0, 1);
 
@@ -434,7 +464,6 @@ void Render()
 		g_CBBufferChangesEveryFrame.renderModel(g_deviceContext, 2, 1); // Slot 2
 		//Set primitve topology
 		g_deviceContext.m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 		g_deviceContext.m_deviceContext->DrawIndexed(g_model.meshes[i].numIndex, 0, 0);
 	}
 

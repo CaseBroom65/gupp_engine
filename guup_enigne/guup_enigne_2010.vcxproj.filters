@@ -125,6 +125,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\fbx\fbxsdk - copia.h" />
+    <ClInclude Include="include\stb_image.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

@@ -9,8 +9,8 @@
 class UserInterface
 {
 public:
-	UserInterface();
-	~UserInterface();
+	UserInterface() = default;
+	~UserInterface() = default;
 
 	void init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 

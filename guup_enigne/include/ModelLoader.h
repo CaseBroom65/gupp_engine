@@ -5,27 +5,51 @@
 class ModelLoader
 {
 public:
-	ModelLoader();
-	~ModelLoader();
+    // Constructor
+    ModelLoader();
+    // Destructor
+    ~ModelLoader();
 
-	bool LoadModel(const std::string& filePath);
-	const std::vector<SimpleVertex>& GetVertices() const { return vertices; }
-	const std::vector<uint32_t>& GetIndices() const { return indices; }
+    // Método para cargar un modelo desde un archivo
+    bool LoadModel(const std::string& filePath);
 
-	std::vector<std::string>GetTextureFileName() const { return textureFileName; }
+    // Método para obtener los vértices cargados
+    const std::vector<SimpleVertex>& GetVertices() const { return vertices; }
 
-	void ProcessNode(FbxNode* node);
-	void ProcessMesh(FbxNode* node);
+    // Método para obtener los índices cargados
+    const std::vector<uint32_t>& GetIndices() const { return indices; }
 
+    // Método para obtener los nombres de archivos de texturas
+    std::vector<std::string> GetTextureFileName() const { return textureFileName; }
 
-	void ProcessMaterial(FbxSurfaceMaterial* material);
+    // Método para procesar un nodo del modelo
+    void ProcessNode(FbxNode* node);
+
+    // Método para procesar una malla del modelo
+    void ProcessMesh(FbxNode* node);
+
+    // Método para procesar un material del modelo
+    void ProcessMaterial(FbxSurfaceMaterial* material);
+
 private:
-	FbxManager* lSdkManager;
-	FbxScene* lScene;
-	std::vector<SimpleVertex> vertices;
-	std::vector<unsigned int> indices;
-	std::vector<std::string> textureFileName;
+    // Puntero al administrador del SDK de FBX
+    FbxManager* lSdkManager;
+
+    // Puntero a la escena de FBX
+    FbxScene* lScene;
+
+    // Vector de vértices del modelo
+    std::vector<SimpleVertex> vertices;
+
+    // Vector de índices del modelo
+    std::vector<unsigned int> indices;
+
+    // Vector de nombres de archivos de texturas
+    std::vector<std::string> textureFileName;
+
 public:
-	std::vector<Mesh> meshes;
+    // Vector de mallas del modelo
+    std::vector<Mesh> meshes;
 };
+
 

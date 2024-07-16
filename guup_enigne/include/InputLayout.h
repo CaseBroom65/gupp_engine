@@ -7,19 +7,25 @@ class DeviceContext;
 	class InputLayout
 {
 public:
-	InputLayout()=default;
-	~InputLayout()=default;
+    // Constructor por defecto
+    InputLayout() = default;
+    // Destructor por defecto
+    ~InputLayout() = default;
 
-	void init(Device device,std::vector<D3D11_INPUT_ELEMENT_DESC> Layout , ID3DBlob* VertexshaderData);
+    // Método para inicializar el diseño de entrada
+    // Recibe un dispositivo, un vector de descripciones de elementos de entrada y datos del shader de vértices
+    void init(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout, ID3DBlob* VertexshaderData);
 
-	void update();
+    // Método para actualizar el diseño de entrada
+    void update();
 
-	void render(DeviceContext& deviceContext);
+    // Método para renderizar usando el contexto del dispositivo
+    void render(DeviceContext& deviceContext);
 
-	void destroy();
-
+    // Método para destruir o liberar recursos del diseño de entrada
+    void destroy();
 
 public:
-	ID3D11InputLayout* m_inputLayout = nullptr;
-};
-
+    // Puntero al diseño de entrada de Direct3D 11
+    ID3D11InputLayout* m_inputLayout = nullptr;
+    };

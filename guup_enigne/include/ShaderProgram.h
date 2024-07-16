@@ -8,32 +8,50 @@ class DeviceContext;
 class ShaderProgram
 {
 public:
-	ShaderProgram() = default;
-	~ShaderProgram() = default;
+    // Constructor por defecto
+    ShaderProgram() = default;
+    // Destructor por defecto
+    ~ShaderProgram() = default;
 
-	void init(Device device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
+    // Método para inicializar el programa de shaders
+    // Recibe un dispositivo, un nombre de archivo y un vector de descripciones de elementos de entrada
+    void init(Device device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
 
-	void update();
+    // Método para actualizar el programa de shaders
+    void update();
 
-	void render(DeviceContext& deviceContext);
+    // Método para renderizar usando el contexto del dispositivo
+    void render(DeviceContext& deviceContext);
 
-	void destroy();
+    // Método para destruir o liberar recursos del programa de shaders
+    void destroy();
 
-	HRESULT CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint,
-		LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
+    // Método para compilar un shader desde un archivo
+    // Recibe el nombre de archivo, el punto de entrada, el modelo de shader y un puntero de salida a un blob
+    HRESULT CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint,
+        LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
-	void CreateInputLayout(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
+    // Método para crear el diseño de entrada
+    // Recibe un dispositivo y un vector de descripciones de elementos de entrada
+    void CreateInputLayout(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout);
 
-	void CreateShader(Device device, ShaderType type);
+    // Método para crear un shader
+    // Recibe un dispositivo y un tipo de shader
+    void CreateShader(Device device, ShaderType type);
 
 public:
-	ID3D11VertexShader* m_VertexShader = nullptr;
-	ID3D11PixelShader* m_PixelShader = nullptr;
-	InputLayout m_inputLayout;
+    // Puntero al shader de vértices de Direct3D 11
+    ID3D11VertexShader* m_VertexShader = nullptr;
+    // Puntero al shader de píxeles de Direct3D 11
+    ID3D11PixelShader* m_PixelShader = nullptr;
+    // Diseño de entrada
+    InputLayout m_inputLayout;
 
 private:
-	std::string m_shaderFileName;
-	ID3DBlob* m_vertexShaderData = nullptr;
-	ID3DBlob* m_pixelShaderData = nullptr;
-
+    // Nombre del archivo del shader
+    std::string m_shaderFileName;
+    // Datos del shader de vértices
+    ID3DBlob* m_vertexShaderData = nullptr;
+    // Datos del shader de píxeles
+    ID3DBlob* m_pixelShaderData = nullptr;
 };

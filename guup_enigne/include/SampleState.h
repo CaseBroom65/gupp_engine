@@ -7,17 +7,25 @@ class DeviceContext;
 class SamplerState
 {
 public:
-	SamplerState() = default;
-	~SamplerState() = default;
+    // Constructor por defecto
+    SamplerState() = default;
+    // Destructor por defecto
+    ~SamplerState() = default;
 
+    // Método para inicializar el estado del sampler
+    void init(Device device);
 
-	void init(Device device);
-	void update();
-	void render(DeviceContext& deviceContext, unsigned int StartSlot,
-		unsigned int NumSamplers);
-	void destroy();
+    // Método para actualizar el estado del sampler
+    void update();
+
+    // Método para renderizar usando el contexto del dispositivo
+    // Recibe un contexto de dispositivo, la ranura de inicio y el número de samplers
+    void render(DeviceContext& deviceContext, unsigned int StartSlot, unsigned int NumSamplers);
+
+    // Método para destruir o liberar recursos del estado del sampler
+    void destroy();
 
 private:
-	ID3D11SamplerState* m_sampler = nullptr;
-
+    // Puntero al estado del sampler de Direct3D 11
+    ID3D11SamplerState* m_sampler = nullptr;
 };

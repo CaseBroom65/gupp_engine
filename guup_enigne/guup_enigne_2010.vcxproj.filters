@@ -32,7 +32,6 @@
     <ClCompile Include="source\DeviceContext.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="include\swap chain.cpp" />
     <ClCompile Include="source\Texture.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -60,9 +59,12 @@
     <ClCompile Include="source\ModelLoader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="guup_enigne.cpp" />
+    <ClCompile Include="guup_enigne.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="include\swap chain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="guup_enigne.fx">

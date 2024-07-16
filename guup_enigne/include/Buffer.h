@@ -4,12 +4,6 @@
 class Device;
 class DeviceContext;
 
-///                <summary>
-/// Buffer:es un área de memoria que se utiliza para 
-/// almacenar datos temporales mientras se procesan. 
-/// Los buffers son fundamentales para la eficiencia y la gestión 
-/// de recursos en la representación de gráficos. 
-///                  </summary>
 class Buffer
 {
 public:

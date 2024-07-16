@@ -19,6 +19,7 @@
 #include "SampleState.h"
 #include "ModelLoader.h"
 #include "fbxsdk.h"
+#include "UserInterface.h"
 //--------------------------------------------------------------------------------------
 // Structures
 //--------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ SamplerState							g_sampler;
 ModelLoader								g_model;
 Texture									g_default;
 std::vector<Texture>gridTexs;
-
+UserInterface							g_UserInterface;
 
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
@@ -340,6 +341,8 @@ HRESULT InitDevice()
 	cbChangesOnResize.mProjection = XMMatrixTranspose(g_Projection);
 	/*g_CBBufferChangeOnResize.update(g_deviceContext, 0, nullptr, &cbChangesOnResize, 0, 0);*/
 
+	//initialize Classes
+	g_UserInterface.init(g_window.m_hWnd,g_device.m_device,g_deviceContext.m_deviceContext);
 	return S_OK;
 }
 
@@ -377,6 +380,7 @@ void CleanupDevice()
 	g_swapchain.destroy();
 	g_deviceContext.destroy();
 	g_device.destroy();
+	g_UserInterface.destroy();
 
 }
 //--------------------------------------------------------------------------------------
@@ -408,6 +412,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //Update everyframe
 void Update(float DeltaTime)
 {
+	g_UserInterface.update();
+	bool show_demo_window = true;
+	
+	ImGui::Begin("Test");
+
+	ImGui::End();
+
+	
+	
 	// Rotate cube around the origin
 	XMVECTOR translation = XMVectorSet(0.0f, -2.0f, 0.0f, 0.0f); // Traslación en x=1, y=2, z=3
 	XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(XMConvertToRadians(260), XMConvertToRadians(DeltaTime * 50), 0.0f); // Rotación en X=180, Y=180, Z=0
@@ -467,7 +480,7 @@ void Render()
 		g_deviceContext.m_deviceContext->DrawIndexed(g_model.meshes[i].numIndex, 0, 0);
 	}
 
-	//
+	g_UserInterface.render();
 	// Present our back buffer to our front buffer
 	//
 	//g_pSwapChain->Present(0, 0);

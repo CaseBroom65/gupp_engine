@@ -18,6 +18,15 @@
     <Filter Include="include">
       <UniqueIdentifier>{75df6479-3a40-4d7a-85ba-728f0f196719}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{80f6be7c-0872-48e3-bc0f-1aba046aa74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Include">
+      <UniqueIdentifier>{082411c9-41ea-4ec8-b97a-88fa544f955c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Source">
+      <UniqueIdentifier>{36a3d3ac-8d0e-4ddd-88bc-bb935c2f174a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseApp.cpp">
@@ -63,6 +72,30 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="include\swap chain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\imgui.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\imgui_demo.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\imgui_draw.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\imgui_tables.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\imgui_widgets.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\backends\imgui_impl_dx11.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui-docking\backends\imgui_impl_win32.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UserInterface.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,6 +161,33 @@
     </ClInclude>
     <ClInclude Include="include\fbx\fbxsdk - copia.h" />
     <ClInclude Include="include\stb_image.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\backends\imgui_impl_dx11.h">
+      <Filter>Imgui\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\backends\imgui_impl_win32.h">
+      <Filter>Imgui\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imconfig.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imgui.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imgui_internal.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imstb_rectpack.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imstb_textedit.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui-docking\imstb_truetype.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UserInterface.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

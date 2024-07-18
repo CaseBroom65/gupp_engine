@@ -19,6 +19,11 @@
 #include "SampleState.h"
 #include "ModelLoader.h"
 #include "fbxsdk.h"
+<<<<<<< Updated upstream
+=======
+#include "UserInterface.h"
+
+>>>>>>> Stashed changes
 //--------------------------------------------------------------------------------------
 // Structures
 //--------------------------------------------------------------------------------------
@@ -408,6 +413,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //Update everyframe
 void Update(float DeltaTime)
 {
+<<<<<<< Updated upstream
+=======
+	g_UserInterface.update();
+	bool show_demo_window = true;
+	
+	ImGui::ShowDemoWindow(&show_demo_window);
+	/*ImGui::Begin("Test");
+
+	ImGui::End();*/
+
+	
+	
+>>>>>>> Stashed changes
 	// Rotate cube around the origin
 	XMVECTOR translation = XMVectorSet(0.0f, -2.0f, 0.0f, 0.0f); // Traslación en x=1, y=2, z=3
 	XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(XMConvertToRadians(260), XMConvertToRadians(DeltaTime * 50), 0.0f); // Rotación en X=180, Y=180, Z=0

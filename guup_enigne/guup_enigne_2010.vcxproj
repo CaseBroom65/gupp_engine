@@ -450,13 +450,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Actor.h" />
     <ClInclude Include="include\BaseApp.h" />
     <ClInclude Include="include\Buffer.h" />
+    <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\depthstencilView.h" />
     <ClInclude Include="include\Device.h" />
     <ClInclude Include="include\DeviceContext.h" />
+    <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\fbx\fbxsdk - copia.h" />
     <ClInclude Include="include\InputLayout.h" />
+    <ClInclude Include="include\MeshComponent.h" />
     <ClInclude Include="include\ModelLoader.h" />
     <ClInclude Include="include\PreRequisitos.h" />
     <ClInclude Include="include\RenderTargetView.h" />
@@ -466,6 +470,7 @@
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="include\swap chain.h" />
     <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\ViewPort.h" />
     <ClInclude Include="include\Window.h" />
     <CLInclude Include="resource.h" />

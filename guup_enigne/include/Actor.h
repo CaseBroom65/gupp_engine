@@ -34,6 +34,7 @@ public:
 	 */
 	void update(float deltaTime, DeviceContext deviceContext) override;
 
+	void render(DeviceContext deviceContext)override;
 	/*Destruye el actor y libera los recursos asociados*/
 
 	void destroy();
@@ -43,6 +44,8 @@ public:
 	return puntero compartido al componente, o nullptr si no se encuentra*/
 	template <typename T>
 	std::shared_ptr<T> getComponent();
+
+	
 
 	/*Establece mallas en el actor
 	param device El dispositivo con el cual se inicializan las mallas
@@ -64,9 +67,9 @@ private:
 	std::vector<MeshComponent> m_meshes; //vector de componentes de malla
 	std::vector<Texture> m_textures; //vector de texturas
 	SamplerState m_sampler;   //Estado de muestreo.
-	std::vector<Buffer> m_VertexBuffer; //Buffer de los vertices
-	std::vector<Buffer> m_IndexBuffer; //Buffer de los indices
-	Buffer ModelBuffer;
+	std::vector<Buffer> m_vertexBuffers; //Buffer de los vertices
+	std::vector<Buffer> m_indexBuffers; //Buffer de los indices
+	Buffer m_ModelBuffer;
 	CBChangesEveryFrame model;
 	std::string m_name = "Actor";
 };

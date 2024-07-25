@@ -3,6 +3,7 @@
 
 class Device;
 class DeviceContext;
+class MeshComponent;
 
 class Buffer
 {
@@ -11,7 +12,7 @@ public:
 	~Buffer() = default;
 
 	//Inicializa vertex y index buffers
-	void init(Device device, Mesh mesh, unsigned int bindFlag);
+	void init(Device device, MeshComponent mesh, unsigned int bindFlag);
 
 	//Inicializa los Constant Buffers
 	void init(Device device, unsigned int ByteWidth);

@@ -5,6 +5,7 @@
 #include <xnamath.h>
 #include <vector>
 #include <string>
+#include <memory>
 
 //Librerias DirectX
 #include <d3d11.h>

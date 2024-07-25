@@ -1,6 +1,7 @@
 #include "Buffer.h"
 #include "Device.h"
 #include "DeviceContext.h"
+#include "MeshComponent.h"
 
 // Método privado para crear un búfer
 void Buffer::createBuffer(Device& device,
@@ -13,15 +14,15 @@ void Buffer::createBuffer(Device& device,
     }
 }
 
-void Buffer::init(Device device, Mesh mesh, unsigned int bindFlag) {
+void Buffer::init(Device device, MeshComponent mesh, unsigned int bindFlag) {
     // Verifica si el dispositivo es válido
     if (device.m_device == nullptr) {
         ERROR("Buffer", "init", "CHECK FOR Device device");
     }
 
     // Valida los datos de la malla según el flag de enlace
-    if ((bindFlag == D3D11_BIND_VERTEX_BUFFER && mesh.vertex.empty()) ||
-        (bindFlag == D3D11_BIND_INDEX_BUFFER && mesh.index.empty())) {
+    if ((bindFlag == D3D11_BIND_VERTEX_BUFFER && mesh.m_vertex.empty()) ||
+        (bindFlag == D3D11_BIND_INDEX_BUFFER && mesh.m_index.empty())) {
         ERROR("Buffer", "init", "CHECK FOR Mesh mesh");
     }
 
@@ -36,16 +37,16 @@ void Buffer::init(Device device, Mesh mesh, unsigned int bindFlag) {
     // Inicializa el búfer de vértices
     if (bindFlag == D3D11_BIND_VERTEX_BUFFER) {
         m_stride = sizeof(SimpleVertex);
-        desc.ByteWidth = m_stride * static_cast<unsigned int>(mesh.vertex.size());
+        desc.ByteWidth = m_stride * static_cast<unsigned int>(mesh.m_vertex.size());
         desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-        InitData.pSysMem = mesh.vertex.data();
+        InitData.pSysMem = mesh.m_vertex.data();
     }
     // Inicializa el búfer de índices
     else if (bindFlag == D3D11_BIND_INDEX_BUFFER) {
         m_stride = sizeof(unsigned int);
-        desc.ByteWidth = m_stride * static_cast<unsigned int>(mesh.index.size());
+        desc.ByteWidth = m_stride * static_cast<unsigned int>(mesh.m_index.size());
         desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-        InitData.pSysMem = mesh.index.data();
+        InitData.pSysMem = mesh.m_index.data();
     }
 
     // Crea el búfer

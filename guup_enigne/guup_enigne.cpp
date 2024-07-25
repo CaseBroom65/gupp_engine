@@ -19,7 +19,7 @@
 #include "SampleState.h"
 #include "ModelLoader.h"
 #include "fbxsdk.h"
-//#include "UserInterface.h"
+#include "UserInterface.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ SamplerState							g_sampler;
 ModelLoader								g_model;
 Texture									g_default;
 std::vector<Texture>gridTexs;
-
+UserInterface                            g_UserInterface;
 
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
@@ -342,7 +342,7 @@ HRESULT InitDevice()
 	//CBChangeOnResize cbChangesOnResize;
 	cbChangesOnResize.mProjection = XMMatrixTranspose(g_Projection);
 	/*g_CBBufferChangeOnResize.update(g_deviceContext, 0, nullptr, &cbChangesOnResize, 0, 0);*/
-
+	g_UserInterface.init(g_window.m_hWnd, g_device.m_device, g_deviceContext.m_deviceContext);
 	return S_OK;
 }
 
@@ -380,13 +380,17 @@ void CleanupDevice()
 	g_swapchain.destroy();
 	g_deviceContext.destroy();
 	g_device.destroy();
+	g_UserInterface.destroy();
 
 }
 //--------------------------------------------------------------------------------------
 // Called every time the application receives a message
 //--------------------------------------------------------------------------------------
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
 	PAINTSTRUCT ps;
 	HDC hdc;
 
@@ -412,10 +416,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void Update(float DeltaTime)
 {
 
-	//g_UserInterface.update();
-	//bool show_demo_window = true;
-	//
-	//ImGui::ShowDemoWindow(&show_demo_window);
+	g_UserInterface.update();
+	bool show_demo_window = true;
+	
+	ImGui::ShowDemoWindow(&show_demo_window);
 	///*ImGui::Begin("Test");
 
 	//ImGui::End();*/
@@ -482,7 +486,7 @@ void Render()
 		g_deviceContext.m_deviceContext->DrawIndexed(g_model.meshes[i].numIndex, 0, 0);
 	}
 
-	//
+	g_UserInterface.render();
 	// Present our back buffer to our front buffer
 	//
 	//g_pSwapChain->Present(0, 0);

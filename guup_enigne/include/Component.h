@@ -9,7 +9,7 @@ class DeviceContext;
 enum ComponentType
 {
 	NONE = 0,		///Tipo de componente no especificado
-	TRANDFORM= 1,	///Componente de transformación
+	TRANSFORM= 1,	///Componente de transformación
 	MESH =2,		///componente de la malla.
 	MATERIAL =3		///Componente de material.
 };

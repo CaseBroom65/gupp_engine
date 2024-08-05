@@ -161,7 +161,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -205,7 +205,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -250,7 +250,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -295,7 +295,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -341,7 +341,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;NDEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -386,7 +386,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking;C:\Users\silve\OneDrive\Documentos\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;DXUT\Core;DXUT\Optional;./include/fbx;D:\Github\gupp_engine\guup_enigne\imgui-docking;D:\Github\gupp_engine\guup_enigne\imgui-docking\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;FBXSDK_SHARED;NDEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -444,6 +444,7 @@
     <ClCompile Include="source\SampleState.cpp" />
     <ClCompile Include="source\ShaderProgram.cpp" />
     <ClCompile Include="source\Texture.cpp" />
+    <ClCompile Include="source\Transform.cpp" />
     <ClCompile Include="source\UserInterface.cpp" />
     <ClCompile Include="source\viewPort.cpp" />
     <ClCompile Include="source\Window.cpp" />
@@ -489,6 +490,22 @@
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\UserInterface.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix2x2.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix3x3.h" />
+    <ClInclude Include="include\Utilities\Matrix\Matrix4x4.h" />
+    <ClInclude Include="include\Utilities\Memory\TSharedPointer.h" />
+    <ClInclude Include="include\Utilities\Memory\TStaticPtr.h" />
+    <ClInclude Include="include\Utilities\Memory\TUniquePtr.h" />
+    <ClInclude Include="include\Utilities\Memory\TWeakPointer.h" />
+    <ClInclude Include="include\Utilities\Structures\TArray.h" />
+    <ClInclude Include="include\Utilities\Structures\TMap.h" />
+    <ClInclude Include="include\Utilities\Structures\TPair.h" />
+    <ClInclude Include="include\Utilities\Structures\TSet.h" />
+    <ClInclude Include="include\Utilities\Utilities\EngineMath.h" />
+    <ClInclude Include="include\Utilities\Vectors\Quaternion.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector2.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector3.h" />
+    <ClInclude Include="include\Utilities\Vectors\Vector4.h" />
     <ClInclude Include="include\ViewPort.h" />
     <ClInclude Include="include\Window.h" />
     <CLInclude Include="resource.h" />

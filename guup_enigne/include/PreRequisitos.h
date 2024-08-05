@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <xnamath.h>
+#include <thread>
 
 //Librerias DirectX
 #include <d3d11.h>
@@ -13,7 +15,7 @@
 #include <d3dcompiler.h>
 #include "resource.h"
 //Third Parties
-
+#include "Utilities/Memory/TSharedPointer.h"
 // MACRO for safe release of resources
 #define SAFE_RELEASE(x) if(x != nullptr) x->Release(); x = nullptr;
 

@@ -24,6 +24,33 @@
     <Filter Include="Source\ECS">
       <UniqueIdentifier>{00b276b4-173b-4ce4-9b5f-7fda5f105a48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{1a74bee9-4e25-48a1-b003-f95e2bae9c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Include">
+      <UniqueIdentifier>{fdece53b-fbe7-4bac-8a72-5e77a4256bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Source">
+      <UniqueIdentifier>{b21420b3-9d49-4f75-a023-6712c9122132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{149517ed-f447-4919-a2d4-7d37f928361f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Vectors">
+      <UniqueIdentifier>{c8168b81-eea8-4dd0-9e59-3a5311303fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Matrix">
+      <UniqueIdentifier>{38c1f84f-41e6-4941-8d1a-4ad7fb2e331f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Structures">
+      <UniqueIdentifier>{86cf2bd2-76cd-4838-8c87-2e68b4e4e104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Utilities">
+      <UniqueIdentifier>{4415484c-07a8-4bda-98dd-fa31ea529eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Memory">
+      <UniqueIdentifier>{b4b52ef0-5ddc-4417-9404-9ed72a24c18f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseApp.cpp">
@@ -71,15 +98,32 @@
     <ClCompile Include="include\swap chain.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="imgui-docking\backends\imgui_impl_dx11.cpp" />
-    <ClCompile Include="imgui-docking\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui-docking\imgui.cpp" />
-    <ClCompile Include="imgui-docking\imgui_demo.cpp" />
-    <ClCompile Include="imgui-docking\imgui_draw.cpp" />
-    <ClCompile Include="imgui-docking\imgui_tables.cpp" />
-    <ClCompile Include="imgui-docking\imgui_widgets.cpp" />
     <ClCompile Include="source\UserInterface.cpp" />
     <ClCompile Include="source\Actor.cpp">
+      <Filter>Source\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_demo.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_draw.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_tables.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_widgets.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\backends\imgui_impl_dx11.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\backends\imgui_impl_win32.cpp">
+      <Filter>Imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Transform.cpp">
       <Filter>Source\ECS</Filter>
     </ClCompile>
   </ItemGroup>
@@ -153,24 +197,88 @@
     <ClInclude Include="include\Component.h">
       <Filter>include\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="include\Transform.h">
-      <Filter>include\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="include\MeshComponent.h">
       <Filter>include\ECS</Filter>
     </ClInclude>
     <ClInclude Include="include\Actor.h">
       <Filter>include\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="imgui-docking\backends\imgui_impl_dx11.h" />
-    <ClInclude Include="imgui-docking\backends\imgui_impl_win32.h" />
-    <ClInclude Include="imgui-docking\imconfig.h" />
-    <ClInclude Include="imgui-docking\imgui.h" />
-    <ClInclude Include="imgui-docking\imgui_internal.h" />
-    <ClInclude Include="imgui-docking\imstb_rectpack.h" />
-    <ClInclude Include="imgui-docking\imstb_textedit.h" />
-    <ClInclude Include="imgui-docking\imstb_truetype.h" />
     <ClInclude Include="include\UserInterface.h" />
+    <ClInclude Include="imgui-docking\backends\imgui_impl_dx11.h">
+      <Filter>Imgui\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\backends\imgui_impl_win32.h">
+      <Filter>Imgui\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui_internal.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_rectpack.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_textedit.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_truetype.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imconfig.h">
+      <Filter>Imgui\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Matrix\Matrix2x2.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Matrix\Matrix3x3.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Matrix\Matrix4x4.h">
+      <Filter>Utilities\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Memory\TSharedPointer.h">
+      <Filter>Utilities\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Memory\TStaticPtr.h">
+      <Filter>Utilities\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Memory\TUniquePtr.h">
+      <Filter>Utilities\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Memory\TWeakPointer.h">
+      <Filter>Utilities\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Utilities\EngineMath.h">
+      <Filter>Utilities\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Structures\TArray.h">
+      <Filter>Utilities\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Structures\TMap.h">
+      <Filter>Utilities\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Structures\TPair.h">
+      <Filter>Utilities\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Structures\TSet.h">
+      <Filter>Utilities\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Quaternion.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector2.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector3.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utilities\Vectors\Vector4.h">
+      <Filter>Utilities\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>include\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

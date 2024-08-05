@@ -1,6 +1,7 @@
 #pragma once
 #include "PreRequisitos.h"
 #include "fbxsdk.h"
+#include "MeshComponent.h"
 
 class ModelLoader
 {
@@ -49,7 +50,7 @@ private:
 
 public:
     // Vector de mallas del modelo
-    std::vector<Mesh> meshes;
+    std::vector<MeshComponent> meshes;
 };
 
 

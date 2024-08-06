@@ -48,14 +48,14 @@ std::vector<Buffer>						g_vertexBuffers;
 std::vector<Buffer>						g_indexBuffers;
 Buffer									g_CBBufferNeverChanges;
 Buffer									g_CBBufferChangeOnResize;
-Buffer									g_CBBufferChangesEveryFrame;                 
-//MeshComponent                       MC;
+Buffer									g_CBBufferChangesEveryFrame; 
+
 //Mesh									g_mesh;
 std::vector<Texture>					modelTextures;
 SamplerState							g_sampler;
 ModelLoader								g_model;
 Texture									g_default;
-std::vector<Texture>gridTexs;
+std::vector<Texture>					gridTexs;
 UserInterface                            g_UserInterface;
 
 //XMMATRIX                            g_World;
@@ -65,8 +65,11 @@ XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
 CBNeverChanges                      cbNeverChanges;
 CBChangeOnResize                    cbChangesOnResize;
 CBChangesEveryFrame                 cb;
+//Grid Data
+MeshComponent                       MC;
+EngineUtilities::TSharedPointer<Actor> AGrid;
 
-//EngineUtilities::TSharedPointer<Actor> grid;
+//Vela Actor
 EngineUtilities::TSharedPointer<Actor> AVela;
 //std::vector<Texture> gridTexs;
 
@@ -138,10 +141,53 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	return (int)msg.wParam;
 }
 
+void CreateGrid(int width, int depth, float spacing)
+{
+	MC.m_vertex.clear();
+	MC.m_index.clear();
+	float halfLineWidth = .8 * 0.5f;
 
-//--------------------------------------------------------------------------------------
-// Register class and create window
-//--------------------------------------------------------------------------------------
+	for (int i = -width; i <= width;++i)
+	{
+		//Create vertices for a vertical line as to triangles
+		MC.m_vertex.push_back({ XMFLOAT3(i * spacing - halfLineWidth,0, -depth * spacing),XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(i * spacing + halfLineWidth,0, -depth * spacing),XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(i * spacing - halfLineWidth,0, depth * spacing),XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(i * spacing + halfLineWidth,0, depth * spacing),XMFLOAT2(0.0f,0.0f) });
+
+		MC.m_index.push_back(MC.m_vertex.size() - 4);
+		MC.m_index.push_back(MC.m_vertex.size() - 3);
+		MC.m_index.push_back(MC.m_vertex.size() - 2);
+
+		MC.m_index.push_back(MC.m_vertex.size() - 3);
+		MC.m_index.push_back(MC.m_vertex.size() - 2);
+		MC.m_index.push_back(MC.m_vertex.size() - 1);
+	}
+
+	for (int i = -depth; i <= depth; ++i)
+	{
+		//Create vertices for a horizontal line as to triangles
+		MC.m_vertex.push_back({ XMFLOAT3(-width * spacing ,0, i * spacing - halfLineWidth),
+								XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(width * spacing ,0, i * spacing - halfLineWidth),
+								XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(-width * spacing ,0, i * spacing + halfLineWidth),
+								XMFLOAT2(0.0f,0.0f) });
+		MC.m_vertex.push_back({ XMFLOAT3(width * spacing ,0, i * spacing + halfLineWidth),
+								XMFLOAT2(0.0f,0.0f) });	
+
+		MC.m_index.push_back(MC.m_vertex.size() - 4);
+		MC.m_index.push_back(MC.m_vertex.size() - 3);
+		MC.m_index.push_back(MC.m_vertex.size() - 2);
+
+		MC.m_index.push_back(MC.m_vertex.size() - 3);
+		MC.m_index.push_back(MC.m_vertex.size() - 2);
+		MC.m_index.push_back(MC.m_vertex.size() - 1);
+	}
+	MC.m_numVertex = MC.m_vertex.size();
+	MC.m_numIndex = MC.m_index.size();
+}
+
 
 
 
@@ -246,6 +292,9 @@ HRESULT InitDevice()
 
 	g_shaderProgram.init(g_device, "guup_enigne.fx", Layout);
 
+	//Create Grid 
+	CreateGrid(50,50,25);
+
 	//load model
 	g_model.LoadModel("Models/Vela2.fbx");
 	/* {
@@ -338,7 +387,7 @@ HRESULT InitDevice()
 	cbChangesOnResize.mProjection = XMMatrixTranspose(g_Projection);
 	// Set Vela Actor
 	AVela = EngineUtilities::MakeShared<Actor>(g_device);
-
+	
 	if (!AVela.isNull()) {
 		MESSAGE("Actor", "Actor", "Actor accessed successfully.")
 
@@ -352,22 +401,29 @@ HRESULT InitDevice()
 		MESSAGE("Actor", "Actor", "Actor resource not found.")
 	}
 
-	/* grid = EngineUtilities::MakeShared<Actor>(g_device);
-	 if (!grid.isNull()) {
-		 MESSAGE("Actor", "Actor", "Actor accessed successfully.")
-			 std::vector<MeshComponent> gridMesh;
-		 gridMesh.push_back(MC);
-		 grid->setMesh(g_device, gridMesh);
-		 gridTexs.push_back(g_default);
-		 grid->setTextures(gridTexs);
-		 grid->getComponent<Transform>()->setPosition(EngineUtilities::Vector3(0.0f, -2.0f, 0.0f));
-		 grid->getComponent<Transform>()->setScale(EngineUtilities::Vector3(.03f, .03f, .03f));
-	 }
-	 else {
-		 MESSAGE("Actor", "Actor", "Actor resource not found.")
-	 }*/
+	// Set Grid Actor
+	AGrid = EngineUtilities::MakeShared<Actor>(g_device);
+	if (!AGrid.isNull()) {
+		
+		std::vector<MeshComponent> gridMesh;
+		gridMesh.push_back(MC);
+		AGrid->SetMesh(g_device, gridMesh);
+		gridTexs.push_back(g_default);
+		AGrid->SetTextures(gridTexs);
+			AGrid->getComponent<Transform>()->setPosition(EngineUtilities::Vector3(0.0f, -2.0f, 0.0f));
+
+			AGrid->getComponent<Transform>()->setScale(EngineUtilities::Vector3(.03f, .03f, .03f));
+
+		MESSAGE("Actor", "Crid", "Actor Create successfully.")
+	}
+	else {
+		MESSAGE("Actor", "Actor", "Actor resource not found.")
+	}
+	
 	/*g_CBBufferChangeOnResize.update(g_deviceContext, 0, nullptr, &cbChangesOnResize, 0, 0);*/
-	g_UserInterface.init(g_window.m_hWnd, g_device.m_device, g_deviceContext.m_deviceContext);
+	g_UserInterface.init(g_window.m_hWnd,
+		g_device.m_device, 
+		g_deviceContext.m_deviceContext);
 	return S_OK;
 }
 
@@ -380,7 +436,7 @@ void CleanupDevice()
 	if (g_deviceContext.m_deviceContext) g_deviceContext.m_deviceContext->ClearState();
 
 	AVela->destroy();
-	//grid->destroy();
+	AGrid->destroy();
 
 	//g_default.destroy();
 	g_CBBufferNeverChanges.destroy();
@@ -445,7 +501,8 @@ void Update(double DeltaTime)
 	// Actualizar info logica del mesh
 	AVela->getComponent<Transform>()->ui_noWindow("Transform");
 	AVela->update(0, g_deviceContext);
-	//grid->update(0, g_deviceContext);
+	AGrid->getComponent<Transform>()->ui_noWindow("Grid Transform");
+	AGrid->update(0, g_deviceContext);
 	//EngineUtilities::Vector3 translation(0.0f, 0.0f, DeltaTime);
 	//AVela->getComponent<Transform>()->translate(translation);
 	//AVela->getComponent<Transform>()->setRotation(Vector3f(XM_PI / -2.0f, DeltaTime, XM_PI / 2.0f));
@@ -474,7 +531,7 @@ void Render()
 
 	// Render the models
 	AVela->render(g_deviceContext);
-	//grid->render(g_deviceContext);
+	AGrid->render(g_deviceContext);
 
 	//for (size_t i = 0; i < 7; i++) {
 	//	//g_vertexBuffers[i].render(g_deviceContext, 0, 1);

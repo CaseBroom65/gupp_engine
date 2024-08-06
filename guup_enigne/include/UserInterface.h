@@ -5,9 +5,10 @@
 #include "imgui_impl_win32.h"
 #include <imgui_internal.h>
 
-class Window;
+class window;
 class SwapChain;
 class Texture;
+
 class UserInterface
 {
 public:
@@ -17,10 +18,11 @@ public:
     void init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 
     void update();
-
+        
     void render();
 
     void destroy();
+
     void
         vec3Control(const std::string& label,
             float* values,
@@ -28,10 +30,10 @@ public:
             float columnWidth = 100.0f);
 
     void
-        menuBar(Window window, SwapChain swapChain, Texture& backBuffer);
+        menuBar(window window, SwapChain swapChain, Texture& backBuffer);
 
     void
-        Renderer(Window window, ID3D11ShaderResourceView* renderTexture);
+        Renderer(window window, ID3D11ShaderResourceView* renderTexture);
 
     //void
     //Inspector(std::vector<Model> & models, int index);

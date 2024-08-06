@@ -10,7 +10,7 @@ Actor::Actor(Device device)
 	std::shared_ptr<MeshComponent> Mesh = std::make_shared<MeshComponent>();
 	addComponent(Mesh);
 
-	m_ModelBuffer.init(device, sizeof(CBChangesEveryFrame));
+	m_modelBuffer.init(device, sizeof(CBChangesEveryFrame));
 	m_sampler.init(device);
 }
 
@@ -20,7 +20,7 @@ void Actor::update(float deltaTime, DeviceContext deviceContext)
 
 	model.mWorld = XMMatrixTranspose(getComponent<Transform>()->matrix);
 	model.vMeshColor = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
-	m_ModelBuffer.update(deviceContext, 0, nullptr, &model, 0, 0);
+	m_modelBuffer.update(deviceContext, 0, nullptr, &model, 0, 0);
 }
 
 
@@ -43,7 +43,7 @@ void Actor::render(DeviceContext deviceContext)
 
 		}
 		m_sampler.render(deviceContext, 0, 1);
-		m_ModelBuffer.renderModel(deviceContext, 2, 1);
+		m_modelBuffer.renderModel(deviceContext, 2, 1);
 
 		deviceContext.m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		deviceContext.m_deviceContext->DrawIndexed(m_meshes[i].m_numIndex, 0, 0); //referencia para los indices
@@ -64,7 +64,7 @@ void Actor::destroy()
 	{
 		tex.destroy();
 	}
-	m_ModelBuffer.destroy();
+	m_modelBuffer.destroy();
 	m_sampler.destroy();
 }
 void Actor::SetMesh(Device device, std::vector<MeshComponent> meshes)

@@ -12,7 +12,6 @@
 #include "Buffer.h"
 #include "SampleState.h"
 #include "ModelLoader.h"
-
 #include "UserInterface.h"
 #include "Actor.h"
 

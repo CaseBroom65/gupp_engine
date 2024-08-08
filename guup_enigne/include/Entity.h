@@ -22,9 +22,9 @@ public:
 	template <typename T>
 	std::shared_ptr<T> getComponent()
 	{
-		for (auto& component : componets)
+		for (auto& component : Component)
 		{
-			std::shared_ptr<T> specificComponet = std::dynamic_pointer_cast<T>(componet);
+			std::shared_ptr<T> specificComponet = std::dynamic_pointer_cast<T>(component);
 			if (specificComponet)
 			{
 				return specificComponet;

@@ -142,6 +142,7 @@ void UserInterface::vec3Control(const std::string& label, float* values, float r
 
     ImGui::PopID();
 }
+
 void
 UserInterface::menuBar(window window, SwapChain swapChain, Texture& backBuffer) {
     if (ImGui::BeginMainMenuBar())

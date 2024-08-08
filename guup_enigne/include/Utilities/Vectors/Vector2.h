@@ -27,7 +27,7 @@
  * SOFTWARE.
 */
 #pragma once
-#include "Utilities/EngineMath.h"
+#include "Utilities/Utilities/EngineMath.h"
 
 namespace EngineUtilities {
   /**

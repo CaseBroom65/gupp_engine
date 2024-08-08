@@ -6,8 +6,7 @@ class DeviceContext;
 * Tipos de componentes disponibles en el juego.
 */
 
-enum ComponentType
-{
+enum ComponentType{
 	NONE = 0,		///Tipo de componente no especificado
 	TRANSFORM= 1,	///Componente de transformación
 	MESH =2,		///componente de la malla.
@@ -22,8 +21,7 @@ enum ComponentType
 * permitiendo actualizar y renderizar el componente , asi como obtener su tipo.
 */
 
-class Component
-{
+class Component{
 public:
 	/*Constructor por defecto*/
 	Component() = default;
@@ -41,14 +39,16 @@ public:
 	* Param deltaTime El tiempo transcurrido desde la ultima actualización.
 	*/
 
-	virtual void update(float deltaTime) = 0;
+	virtual void 
+		update(float deltaTime) = 0;
 
 	/*
 	* metodo virutal para renderizar el componente
 	* param DeviceContext Contexto  del dispositivo para operaciones graficas.
 	*/
 
-	virtual void render(DeviceContext deviceContext) = 0;
+	virtual void 
+		render(DeviceContext deviceContext) = 0;
 
 	/*
 	*Obtiene el tipo del componente

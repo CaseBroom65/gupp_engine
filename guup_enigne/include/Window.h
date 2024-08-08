@@ -12,16 +12,20 @@ public:
 
     // Método para inicializar la ventana
     // Recibe un handle a la instancia, un código de comando y un procedimiento de ventana
-    HRESULT init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc);
+    HRESULT 
+      init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc);
 
     // Método para actualizar la ventana
-    void update();
+    void
+      update();
 
     // Método para renderizar la ventana
-    void render();
+    void
+      render();
 
     // Método para destruir o liberar recursos de la ventana
-    void destroy();
+    void 
+      destroy();
 
 public:
     // Handle de la ventana

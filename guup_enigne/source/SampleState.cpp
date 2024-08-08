@@ -2,11 +2,9 @@
 #include "Device.h"
 #include "DeviceContext.h"
 
-void SamplerState::init(Device device)
-{
+void SamplerState::init(Device device){
     // Verifica si el dispositivo es válido
-    if (device.m_device == nullptr)
-    {
+    if (device.m_device == nullptr){
         ERROR("SamplerState", "init", "CHECK FOR Unsupported BindFlag");
         WARNING("ERROR: SamplerState::init : Error in data from params [CHECK FOR Device device]");
         exit(1);
@@ -27,27 +25,23 @@ void SamplerState::init(Device device)
     // Crear el sampler state
     hr = device.CreateSamplerState(&sampDesc, &m_sampler);
 
-    if (FAILED(hr))
-    {
+    if (FAILED(hr)){
         ERROR("SamplerState", "init", "CHECK FOR CreateSamplerState");
         WARNING("ERROR: SamplerState::init : Error in data from params [CHECK FOR Device device]");
         exit(1);
     }
 }
 
-void SamplerState::update()
-{
+void SamplerState::update(){
     // Método vacío para actualizaciones, puede ser implementado más adelante
 }
 
-void SamplerState::render(DeviceContext& deviceContext, unsigned int StartSlot, unsigned int NumSamplers)
-{
+void SamplerState::render(DeviceContext& deviceContext, unsigned int StartSlot, unsigned int NumSamplers){
     // Configura el sampler en el dispositivo de contexto
     deviceContext.PSSetSamplers(StartSlot, NumSamplers, &m_sampler);
 }
 
-void SamplerState::destroy()
-{
+void SamplerState::destroy(){
     // Liberar el sampler state
     SAFE_RELEASE(m_sampler);
 }

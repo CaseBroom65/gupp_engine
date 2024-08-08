@@ -14,8 +14,7 @@ class MeshComponent;
  * La clase Actor hereda de Entity y representa un objeto en el juego que puede tener mallas,
  * texturas y varios componentes. Proporciona metodos para actualizar , renderizar, y destruir un actor.
 */
-class Actor : public Entity
-{
+class Actor : public Entity{
 public:
 	/*Constructor por defecto*/
 	Actor() = default;
@@ -31,29 +30,31 @@ public:
 	 *deltaTime El tiempo transcurrido desde la ultima actualización.
 	 *deviceContext Contexto del dispositivo para operaciones graficas.
 	 */
-	void update(float deltaTime, DeviceContext deviceContext) override;
+	void 
+	update(float deltaTime, DeviceContext deviceContext) override;
 
-	void render(DeviceContext deviceContext)override;
+	void 
+	render(DeviceContext deviceContext)override;
 	/*Destruye el actor y libera los recursos asociados*/
 
-	void destroy();
+	void 
+	destroy();
 	/*obtiene un componente especifico del actor.
 	param T Tipo del componente que se va a obtener
 	return puntero compartido al componente, o nullptr si no se encuentra*/
 	template <typename T>
 	std::shared_ptr<T> getComponent();
-
-
-
 	/*Establece mallas en el actor
 	param device El dispositivo con el cual se inicializan las mallas
 	param meshes Vector de componentes de mallas que se van a establecer*/
 
-	void SetMesh(Device device, std::vector<MeshComponent> meshes);
+	void 
+	SetMesh(Device device, std::vector<MeshComponent> meshes);
 	/*Establece las texturas del actor
 	param textures Vector de trexturas  que se van a establecer*/
 
-	void SetTextures(std::vector<Texture> textures);
+	void 
+	SetTextures(std::vector<Texture> textures);
 	/*Obtiene el nombre del actor
 	return el nombre del actor.
 	*/

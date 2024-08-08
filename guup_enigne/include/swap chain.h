@@ -17,19 +17,25 @@ public:
 
     // Método para inicializar la cadena de intercambio
     // Recibe un dispositivo, un contexto de dispositivo, un búfer de fondo y una ventana
-    void init(Device& device, DeviceContext& deviceContext, Texture& backBuffer, window window);
+    void 
+      init(Device& device, DeviceContext& deviceContext,
+           Texture& backBuffer, window window);
 
     // Método para actualizar la cadena de intercambio
-    void update();
+    void 
+      update();
 
     // Método para renderizar usando la cadena de intercambio
-    void render();
+    void 
+      render();
 
     // Método para destruir o liberar recursos de la cadena de intercambio
-    void destroy();
+    void 
+      destroy();
 
     // Método para presentar el contenido renderizado
-    void present();
+    void 
+      present();
 
 public:
     // Puntero a la cadena de intercambio de DirectX

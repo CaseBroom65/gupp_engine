@@ -1,7 +1,6 @@
 #include "Window.h" // Incluye el encabezado de la clase Window
 
-HRESULT window::init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc) // Método para inicializar la ventana
-{
+HRESULT window::init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc){ // Método para inicializar la ventana
     m_hInst = hInstance; // Almacena el manejador de la instancia
 
     // Register class
@@ -41,14 +40,11 @@ HRESULT window::init(HINSTANCE hInstance, int nCmdShow, WNDPROC wndproc) // Méto
     return S_OK; // Retorna éxito
 }
 
-void window::update() // Método vacío para futuras actualizaciones
-{
+void window::update(){ // Método vacío para futuras actualizaciones
 }
 
-void window::render() // Método vacío para renderizar
-{
+void window::render(){ // Método vacío para renderizar
 }
 
-void window::destroy() // Método vacío para destruir la ventana y limpiar recursos
-{
+void window::destroy(){ // Método vacío para destruir la ventana y limpiar recursos
 }

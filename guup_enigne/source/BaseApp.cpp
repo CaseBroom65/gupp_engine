@@ -1,7 +1,6 @@
 #include "BaseApp.h"
 // Método para inicializar la aplicación base
-HRESULT BaseApp::init()
-{
+HRESULT BaseApp::init(){
 	HRESULT hr = S_OK;
 	//create Swapchain
 	m_swapchain.init(m_device, m_deviceContext, m_BackBuffer, m_window);
@@ -155,8 +154,7 @@ HRESULT BaseApp::init()
 }
 
 // Método para actualizar la lógica de la aplicación
-void BaseApp::update()
-{
+void BaseApp::update(){
 	m_UserInterface.update();
 	bool show_demo_window = true;
 
@@ -179,8 +177,7 @@ void BaseApp::update()
 }
 
 // Método para renderizar la escena
-void BaseApp::render()
-{
+void BaseApp::render(){
 	// Clear the back buffer
 
 	float ClearColor[4] = { 0.85f, 0.85f, 0.85f, 1.0f }; // red, green, blue, alpha
@@ -214,8 +211,7 @@ void BaseApp::render()
 
 
 // Método para destruir o liberar recursos de la aplicación
-void BaseApp::destroy()
-{
+void BaseApp::destroy(){
 	if (m_deviceContext.m_deviceContext) m_deviceContext.m_deviceContext->ClearState();
 
 	AVela->destroy();
@@ -238,8 +234,8 @@ void BaseApp::destroy()
 	m_device.destroy();
 }
 
-int BaseApp::run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow, WNDPROC wndproc)
-{
+int BaseApp::run(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+								 LPWSTR lpCmdLine, int nCmdShow, WNDPROC wndproc){
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -247,8 +243,7 @@ int BaseApp::run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine,
 		return 0;
 	
 
-		if (FAILED(init()))
-		{
+		if (FAILED(init())){
 			destroy();
 			return 0;
 		}
@@ -256,23 +251,18 @@ int BaseApp::run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine,
 
 		// Main message loop
 		MSG msg = { 0 };
-		while (WM_QUIT != msg.message)
-		{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
+		while (WM_QUIT != msg.message){
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else
-		{
+		else{
 			// Update our time
 			static float t = 0.0f;
-			if (m_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
-			{
+			if (m_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE){
 				t += (float)XM_PI * 0.0125f;
 			}
-			else
-			{
+			else{
 			update();
 			render(); 
 			}
@@ -291,9 +281,9 @@ void BaseApp::CreateGrid(int width, int depth, float spacing)
     MC.m_index.clear();
     float halfLineWidth = .8 * 0.5f;
 
-    for (int i = -width; i <= width;++i)
-    {
-        //Create vertices for a vertical line as to triangles
+    for (int i = -width; i <= width;++i){
+        
+			//Create vertices for a vertical line as to triangles
         MC.m_vertex.push_back({ XMFLOAT3(i * spacing - halfLineWidth,0, -depth * spacing),XMFLOAT2(0.0f,0.0f) });
         MC.m_vertex.push_back({ XMFLOAT3(i * spacing + halfLineWidth,0, -depth * spacing),XMFLOAT2(0.0f,0.0f) });
         MC.m_vertex.push_back({ XMFLOAT3(i * spacing - halfLineWidth,0, depth * spacing),XMFLOAT2(0.0f,0.0f) });
@@ -308,9 +298,9 @@ void BaseApp::CreateGrid(int width, int depth, float spacing)
         MC.m_index.push_back(MC.m_vertex.size() - 1);
     }
 
-    for (int i = -depth; i <= depth; ++i)
-    {
-        //Create vertices for a horizontal line as to triangles
+    for (int i = -depth; i <= depth; ++i){
+        
+			//Create vertices for a horizontal line as to triangles
         MC.m_vertex.push_back({ XMFLOAT3(-width * spacing ,0, i * spacing - halfLineWidth),
                                 XMFLOAT2(0.0f,0.0f) });
         MC.m_vertex.push_back({ XMFLOAT3(width * spacing ,0, i * spacing - halfLineWidth),

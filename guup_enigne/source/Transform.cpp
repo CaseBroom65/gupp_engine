@@ -2,13 +2,11 @@
 #include "DeviceContext.h"
 
 
-void Transform::translate(const EngineUtilities::Vector3& translation)
-{
+void Transform::translate(const EngineUtilities::Vector3& translation){
 	position = position + translation;
 }
 
-void Transform::init()
-{
+void Transform::init(){
 	scale.x = 1;
 	scale.y = 1;
 	scale.z = 1;
@@ -31,16 +29,13 @@ void Transform::update(float deltaTime) {
 	matrix = scaleMatrix * rotationMatrix * translationMatrix;
 }
 
-void Transform::render(DeviceContext deviceContext)
-{
+void Transform::render(DeviceContext deviceContext){
 }
 
-void Transform::destroy()
-{
+void Transform::destroy(){
 }
 
-void Transform::ui(std::string wName)
-{
+void Transform::ui(std::string wName){
 	ImGui::Begin(wName.c_str());
 
 	// Draw the structure
@@ -51,8 +46,7 @@ void Transform::ui(std::string wName)
 	ImGui::End();
 }
 
-void Transform::ui_noWindow(std::string wName)
-{
+void Transform::ui_noWindow(std::string wName){
 	ImGui::PushID(wName.c_str());
 
 	// Draw the structure

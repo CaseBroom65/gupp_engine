@@ -24,13 +24,16 @@ public:
     std::vector<std::string> GetTextureFileName() const { return textureFileName; }
 
     // Método para procesar un nodo del modelo
-    void ProcessNode(FbxNode* node);
+    void 
+      ProcessNode(FbxNode* node);
 
     // Método para procesar una malla del modelo
-    void ProcessMesh(FbxNode* node);
+    void 
+      ProcessMesh(FbxNode* node);
 
     // Método para procesar un material del modelo
-    void ProcessMaterial(FbxSurfaceMaterial* material);
+    void
+      ProcessMaterial(FbxSurfaceMaterial* material);
 
 private:
     // Puntero al administrador del SDK de FBX

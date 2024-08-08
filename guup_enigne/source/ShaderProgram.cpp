@@ -2,16 +2,13 @@
 #include "Device.h"
 #include "DeviceContext.h"
 
-void ShaderProgram::init(Device device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout)
-{
+void ShaderProgram::init(Device device, std::string fileName, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout){
     // Verifica si el dispositivo es válido
-    if (device.m_device == nullptr)
-    {
+    if (device.m_device == nullptr){
         ERROR("ShaderProgram", "init", "CHECK FOR Device Device");
         exit(1);
     }
-    else if (Layout.size() <= 1)
-    {
+    else if (Layout.size() <= 1){
         ERROR("ShaderProgram", "init", "CHECK FOR vector<D3D11_INPUT_ELEMENT_DESC> Layout.size()");
         exit(1);
     }
@@ -29,13 +26,11 @@ void ShaderProgram::init(Device device, std::string fileName, std::vector<D3D11_
     CreateShader(device, ShaderType::PIXEL_SHADER);
 }
 
-void ShaderProgram::update()
-{
+void ShaderProgram::update(){
     // Método vacío para futuras actualizaciones
 }
 
-void ShaderProgram::render(DeviceContext& deviceContext)
-{
+void ShaderProgram::render(DeviceContext& deviceContext){
     // Establecer el InputLayout
     m_inputLayout.render(deviceContext);
 
@@ -44,8 +39,7 @@ void ShaderProgram::render(DeviceContext& deviceContext)
     deviceContext.PSSetShader(m_PixelShader, nullptr, 0);
 }
 
-void ShaderProgram::destroy()
-{
+void ShaderProgram::destroy(){
     // Liberar los shaders y el InputLayout
     SAFE_RELEASE(m_VertexShader);
     m_inputLayout.destroy();
@@ -53,8 +47,7 @@ void ShaderProgram::destroy()
 }
 
 HRESULT ShaderProgram::CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoint,
-    LPCSTR szShaderModel, ID3DBlob** ppBlobOut)
-{
+                                             LPCSTR szShaderModel, ID3DBlob** ppBlobOut){
     HRESULT hr = S_OK;
 
     DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
@@ -78,14 +71,12 @@ HRESULT ShaderProgram::CompileShaderFromFile(char* szFileName, LPCSTR szEntryPoi
     return S_OK;
 }
 
-void ShaderProgram::CreateInputLayout(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout)
-{
+void ShaderProgram::CreateInputLayout(Device device, std::vector<D3D11_INPUT_ELEMENT_DESC> Layout){
     m_inputLayout.init(device, Layout, m_vertexShaderData);
     m_vertexShaderData->Release(); // Liberar los datos del shader después de usarlos
 }
 
-void ShaderProgram::CreateShader(Device device, ShaderType type)
-{
+void ShaderProgram::CreateShader(Device device, ShaderType type){
     HRESULT hr = S_OK;
     ID3DBlob* shaderData = nullptr;
     const char* shaderEntryPoint = (type == PIXEL_SHADER) ? "PS" : "VS";
@@ -94,37 +85,31 @@ void ShaderProgram::CreateShader(Device device, ShaderType type)
     // Compilar el shader
     hr = CompileShaderFromFile(m_shaderFileName.data(), shaderEntryPoint, shaderModel, &shaderData);
 
-    if (FAILED(hr))
-    {
+    if (FAILED(hr)){
         MessageBox(nullptr, "The FX cannot be compiled. Please run this executable from the directory that contains the FX file.", "Error", MB_OK);
         ERROR("ShaderProgram", "CreateShader", "CHECK FOR CompileShaderFromFile()");
         exit(1);
     }
 
     // Crear el shader
-    if (type == PIXEL_SHADER)
-    {
+    if (type == PIXEL_SHADER){
         hr = device.CreatePixelShader(shaderData->GetBufferPointer(), shaderData->GetBufferSize(), nullptr, &m_PixelShader);
     }
-    else
-    {
+    else{
         hr = device.CreateVertexShader(shaderData->GetBufferPointer(), shaderData->GetBufferSize(), nullptr, &m_VertexShader);
     }
 
-    if (FAILED(hr))
-    {
+    if (FAILED(hr)){
         shaderData->Release();
         ERROR("ShaderProgram", "CreateShader", "CHECK FOR device.CreateShader()");
         exit(1);
     }
 
     // Almacenar los datos del shader compilado
-    if (type == PIXEL_SHADER)
-    {
+    if (type == PIXEL_SHADER){
         m_pixelShaderData = shaderData;
     }
-    else
-    {
+    else{
         m_vertexShaderData = shaderData;
     }
 }

@@ -12,8 +12,7 @@
 */
 
 
-class MeshComponent : public Component
-{
+class MeshComponent : public Component {
 public:
 	/*Constructor por defecto
 	*
@@ -22,18 +21,21 @@ public:
 	MeshComponent() : m_numVertex(0), m_numIndex(0), Component(ComponentType::MESH) {}
 
 	/*Descturctor virtual*/
-	virtual ~MeshComponent()= default;
+	virtual ~MeshComponent() = default;
 
 	/*actualizar el componente de malla
 	*param deltaTime El tiempo trancurrido desde la ultima actualización.
 	*/
 
-	void update(float deltaTime) override {}
+	void
+		update(float deltaTime) override {}
 
 	/*Renderizar el componente de la malla
 	param deviceContext Contexto del dispositivo para operaciones graficas*/
 
-	void render(DeviceContext deviceContext) override {}
+	void 
+		render(DeviceContext deviceContext) override {}
+
 public:
 
 	std::string m_name;	//Nombre de la malla

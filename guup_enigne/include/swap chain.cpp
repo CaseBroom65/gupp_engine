@@ -4,11 +4,10 @@
 #include "Window.h" // Incluye el encabezado de la clase Window
 #include "Texture.h" // Incluye el encabezado de la clase Texture
 
-void SwapChain::init(Device& device, DeviceContext& deviceContext, Texture& backBuffer, window window) // Método para inicializar la cadena de intercambio
-{
+void SwapChain::init(Device& device, DeviceContext& deviceContext, 
+                     Texture& backBuffer, window window){ // Método para inicializar la cadena de intercambio
     // Verifica si el recurso de la ventana existe
-    if (window.m_hWnd == nullptr)
-    {
+    if (window.m_hWnd == nullptr){
         ERROR("Swapchain", "init", "CHECK FOR window window")
             exit(1);
     }
@@ -19,8 +18,7 @@ void SwapChain::init(Device& device, DeviceContext& deviceContext, Texture& back
 #endif
 
     // Tipos de controladores que se intentarán usar
-    D3D_DRIVER_TYPE driverTypes[] =
-    {
+    D3D_DRIVER_TYPE driverTypes[] ={
         D3D_DRIVER_TYPE_HARDWARE, // Controlador de hardware
         D3D_DRIVER_TYPE_WARP, // Controlador WARP (software)
         D3D_DRIVER_TYPE_REFERENCE, // Controlador de referencia
@@ -28,8 +26,7 @@ void SwapChain::init(Device& device, DeviceContext& deviceContext, Texture& back
     UINT numDriverTypes = ARRAYSIZE(driverTypes); // Número de tipos de controladores
 
     // Niveles de características que se intentarán usar
-    D3D_FEATURE_LEVEL featureLevels[] =
-    {
+    D3D_FEATURE_LEVEL featureLevels[] ={
         D3D_FEATURE_LEVEL_11_0, // Nivel de característica 11.0
         D3D_FEATURE_LEVEL_10_1, // Nivel de característica 10.1
         D3D_FEATURE_LEVEL_10_0, // Nivel de característica 10.0
@@ -52,19 +49,16 @@ void SwapChain::init(Device& device, DeviceContext& deviceContext, Texture& back
     HRESULT hr = S_OK; // Inicializa el resultado HRESULT
 
     // Intenta crear el dispositivo y la cadena de intercambio
-    for (unsigned int driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
-    {
+    for (unsigned int driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++){
         m_driverType = driverTypes[driverTypeIndex]; // Selecciona el tipo de controlador actual
         hr = D3D11CreateDeviceAndSwapChain(NULL, m_driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
             D3D11_SDK_VERSION, &sd, &m_swapChain, &device.m_device, &m_featureLevel, &deviceContext.m_deviceContext); // Crea el dispositivo y la cadena de intercambio
 
-        if (SUCCEEDED(hr)) // Verifica si la creación fue exitosa
-        {
+        if (SUCCEEDED(hr)){ // Verifica si la creación fue exitosa
             break; // Sale del bucle si fue exitosa
         }
 
-        if (FAILED(hr)) // Verifica si hubo un error en la creación
-        {
+        if (FAILED(hr)){ // Verifica si hubo un error en la creación
             ERROR("Swapchain", "init", "CHECK FOR D3D11CreateDeviceAndSwapChain()")
                 exit(1); // Salida si falla
         }
@@ -72,27 +66,22 @@ void SwapChain::init(Device& device, DeviceContext& deviceContext, Texture& back
 
     // Crea una vista de destino de renderizado
     hr = m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer.m_texture); // Obtiene el buffer de la cadena de intercambio
-    if (FAILED(hr)) // Verifica si hubo un error al obtener el buffer
-    {
+    if (FAILED(hr)){ // Verifica si hubo un error al obtener el buffer
         ERROR("Swapchain", "init", "CHECK FOR m_swapChain->GetBuffer()")
             exit(1); // Salida si falla
     }
 }
 
-void SwapChain::update() // Método vacío para futuras actualizaciones
-{
+void SwapChain::update(){ // Método vacío para futuras actualizaciones
 }
 
-void SwapChain::render() // Método vacío para renderizar
-{
+void SwapChain::render(){ // Método vacío para renderizar
 }
 
-void SwapChain::destroy() // Método para liberar recursos
-{
+void SwapChain::destroy(){ // Método para liberar recursos
     SAFE_RELEASE(m_swapChain); // Libera la cadena de intercambio
 }
 
-void SwapChain::present() // Método para presentar el contenido de la cadena de intercambio
-{
+void SwapChain::present(){ // Método para presentar el contenido de la cadena de intercambio
     m_swapChain->Present(0, 0); // Presenta el buffer de intercambio
 }

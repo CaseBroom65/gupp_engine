@@ -9,19 +9,22 @@ class window;
 class SwapChain;
 class Texture;
 
-class UserInterface
-{
+class UserInterface{
 public:
     UserInterface() = default;
     ~UserInterface() = default;
 
-    void init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+    void 
+      init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 
-    void update();
+    void 
+      update();
         
-    void render();
+    void 
+      render();
 
-    void destroy();
+    void 
+      destroy();
 
     void
         vec3Control(const std::string& label,

@@ -4,17 +4,14 @@
 #include "DepthStencilView.h"
 #include "Texture.h"
 
-void RenderTargetView::init(Device device, Texture backBuffer, DXGI_FORMAT Format)
-{
+void RenderTargetView::init(Device device, Texture backBuffer, DXGI_FORMAT Format){
     // Verifica si el dispositivo es válido
-    if (device.m_device == nullptr)
-    {
+    if (device.m_device == nullptr){
         ERROR("RenderTargetView", "init", "Check for Device device");
         exit(1);
     }
     // Verifica si el backBuffer es válido
-    else if (backBuffer.m_texture == nullptr)
-    {
+    else if (backBuffer.m_texture == nullptr){
         ERROR("RenderTargetView", "init", "Check for Texture backBuffer");
         exit(1);
     }
@@ -29,28 +26,25 @@ void RenderTargetView::init(Device device, Texture backBuffer, DXGI_FORMAT Forma
     // Crear la vista de renderizado
     hr = device.CreateRenderTargetView(backBuffer.m_texture, &desc, &m_renderTargetView);
 
-    if (FAILED(hr))
-    {
+    if (FAILED(hr)){
         ERROR("RenderTargetView", "init", "Check for CreateRenderTargetView");
         exit(1);
     }
 }
 
-void RenderTargetView::update()
-{
+void RenderTargetView::update(){
     // Método vacío para actualizaciones, puede ser implementado más adelante
 }
 
-void RenderTargetView::render(DeviceContext& deviceContext, DepthStencilView& depthStencilView, unsigned int numViews, float ClearColor[4])
-{
+void RenderTargetView::render(DeviceContext& deviceContext, DepthStencilView& depthStencilView,
+                              unsigned int numViews, float ClearColor[4]){
     // Limpiar la vista de renderizado con el color especificado
     deviceContext.m_deviceContext->ClearRenderTargetView(m_renderTargetView, ClearColor);
     // Establecer los render targets
     deviceContext.m_deviceContext->OMSetRenderTargets(numViews, &m_renderTargetView, depthStencilView.m_DepthStencilView);
 }
 
-void RenderTargetView::destroy()
-{
+void RenderTargetView::destroy(){
     // Liberar la vista de renderizado
     SAFE_RELEASE(m_renderTargetView);
 }

@@ -1,15 +1,12 @@
 #include "ModelLoader.h"
 
-ModelLoader::ModelLoader() : lSdkManager(nullptr), lScene(nullptr)
-{
+ModelLoader::ModelLoader() : lSdkManager(nullptr), lScene(nullptr){
     // Inicialización del SDK manager
     lSdkManager = FbxManager::Create();
-    if (!lSdkManager)
-    {
+    if (!lSdkManager){
         ERROR("ModelLoader", "FbxManager::()", "Unable to create FBX Manager!");
     }
-    else
-    {
+    else{
         MESSAGE("ModelLoader", "ModelLoader", "Autodesk FBX SDK version: " << lSdkManager->GetVersion());
     }
 
@@ -21,28 +18,24 @@ ModelLoader::ModelLoader() : lSdkManager(nullptr), lScene(nullptr)
     lScene = FbxScene::Create(lSdkManager, "myScene");
 }
 
-ModelLoader::~ModelLoader()
-{
+ModelLoader::~ModelLoader(){
     if (lSdkManager)
         lSdkManager->Destroy();
 }
 
-bool ModelLoader::LoadModel(const std::string& filePath)
-{
+bool ModelLoader::LoadModel(const std::string& filePath){
     // Crear e importar los SDK manager en uso
     FbxImporter* lImporter = FbxImporter::Create(lSdkManager, "");
 
     // Usar el primer argumento del filename para importar
-    if (!lImporter->Initialize(filePath.c_str(), -1, lSdkManager->GetIOSettings()))
-    {
+    if (!lImporter->Initialize(filePath.c_str(), -1, lSdkManager->GetIOSettings())){
         MESSAGE("ModelLoader", "LoadModel", "Unable to initialize FBX importer for file: " << filePath.c_str());
         ERROR("ModelLoader", "LoadModel", "Error returned: " << lImporter->GetStatus().GetErrorString());
         return false;
     }
 
     // Importar la escena
-    if (!lImporter->Import(lScene))
-    {
+    if (!lImporter->Import(lScene)){
         ERROR("ModelLoader", "lImporter->Import", "Unable to import the FBX Scene from file: " << filePath.c_str());
         lImporter->Destroy();
         return false;
@@ -54,18 +47,15 @@ bool ModelLoader::LoadModel(const std::string& filePath)
 
     // Procesar la escena
     FbxNode* lrootNode = lScene->GetRootNode();
-    if (lrootNode)
-    {
-        for (int i = 0; i < lrootNode->GetChildCount(); i++)
-        {
+    if (lrootNode){
+        for (int i = 0; i < lrootNode->GetChildCount(); i++){
             ProcessNode(lrootNode->GetChild(i));
         }
     }
 
     // Procesar materiales
     int materialCount = lScene->GetMaterialCount();
-    for (int i = 0; i < materialCount; ++i)
-    {
+    for (int i = 0; i < materialCount; ++i){
         FbxSurfaceMaterial* material = lScene->GetMaterial(i);
         ProcessMaterial(material);
     }
@@ -74,25 +64,20 @@ bool ModelLoader::LoadModel(const std::string& filePath)
     return true;
 }
 
-void ModelLoader::ProcessNode(FbxNode* node)
-{
+void ModelLoader::ProcessNode(FbxNode* node){
     // Verifica si el nodo tiene atributos y si es un mesh
-    if (node->GetNodeAttribute())
-    {
-        if (node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-        {
+    if (node->GetNodeAttribute()){
+        if (node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh){
             ProcessMesh(node);
         }
     }
     // Recursivamente procesa los nodos hijos
-    for (int i = 0; i < node->GetChildCount(); i++)
-    {
+    for (int i = 0; i < node->GetChildCount(); i++){
         ProcessNode(node->GetChild(i));
     }
 }
 
-void ModelLoader::ProcessMesh(FbxNode* node)
-{
+void ModelLoader::ProcessMesh(FbxNode* node){
     FbxMesh* mesh = node->GetMesh();
     if (!mesh) return;
 
@@ -131,7 +116,7 @@ void ModelLoader::ProcessMesh(FbxNode* node)
                     }
                 }
                 else if (mappingMode == FbxGeometryElement::eByPolygonVertex) {
-                    if (referenceMode == FbxGeometryElement::eDirect || referenceMode == FbxGeometryElement::eIndexToDirect) {
+                    if (referenceMode == FbxGeometryElement::eDirect || referenceMode == FbxGeometryElement::eIndexToDirect){
                         uvIndex = uvElement->GetIndexArray().GetAt(polyIndexCounter);
                         polyIndexCounter++;
                     }
@@ -163,19 +148,14 @@ void ModelLoader::ProcessMesh(FbxNode* node)
     meshes.push_back(meshData);
 }
 
-void ModelLoader::ProcessMaterial(FbxSurfaceMaterial* material)
-{
-    if (material)
-    {
+void ModelLoader::ProcessMaterial(FbxSurfaceMaterial* material){
+    if (material){
         FbxProperty prop = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-        if (prop.IsValid())
-        {
+        if (prop.IsValid()){
             int textureCount = prop.GetSrcObjectCount<FbxTexture>();
-            for (int i = 0; i < textureCount; ++i)
-            {
+            for (int i = 0; i < textureCount; ++i){
                 FbxTexture* texture = FbxCast<FbxTexture>(prop.GetSrcObject<FbxTexture>(i));
-                if (texture)
-                {
+                if (texture){
                     textureFileName.push_back(texture->GetName());
                 }
             }

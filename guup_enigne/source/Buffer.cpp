@@ -5,14 +5,14 @@
 
 // Método privado para crear un búfer
 void Buffer::createBuffer(Device& device,
-    D3D11_BUFFER_DESC& desc,
-    D3D11_SUBRESOURCE_DATA* initData) {
-    // Intenta crear el búfer utilizando el dispositivo
-    HRESULT hr = device.CreateBuffer(&desc, initData, &m_buffer);
-    if (FAILED(hr)) {
-        ERROR("Buffer", "createBuffer", "CHECK FOR method createBuffer()");
-    }
-}
+                          D3D11_BUFFER_DESC& desc,
+                          D3D11_SUBRESOURCE_DATA* initData) {
+                          // Intenta crear el búfer utilizando el dispositivo
+                          HRESULT hr = device.CreateBuffer(&desc, initData, &m_buffer);
+                          if (FAILED(hr)) {
+                              ERROR("Buffer", "createBuffer", "CHECK FOR method createBuffer()");
+                          }
+                      }
 
 void Buffer::init(Device device, MeshComponent mesh, unsigned int bindFlag) {
     // Verifica si el dispositivo es válido
@@ -72,11 +72,12 @@ void Buffer::init(Device device, unsigned int ByteWidth) {
 }
 
 void Buffer::update(DeviceContext& deviceContext,
-    unsigned int DstSubresource,
-    const D3D11_BOX* pDstBox,
-    const void* pSrcData,
-    unsigned int SrcRowPitch,
-    unsigned int SrcDepthPitch) {
+                    unsigned int DstSubresource,
+                    const D3D11_BOX* pDstBox,
+                    const void* pSrcData,
+                    unsigned int SrcRowPitch,
+                    unsigned int SrcDepthPitch) {
+
     // Actualiza el búfer con los nuevos datos
     deviceContext.UpdateSubresource(m_buffer,
         DstSubresource,
@@ -87,27 +88,27 @@ void Buffer::update(DeviceContext& deviceContext,
 }
 
 void Buffer::render(DeviceContext& deviceContext,
-    unsigned int StartSlot,
-    unsigned int NumBuffers) {
-    // Renderiza según el tipo de búfer
-    switch (m_bindFlag) {
-    case D3D11_BIND_VERTEX_BUFFER:
-        deviceContext.IASetVertexBuffers(StartSlot,
-            NumBuffers,
-            &m_buffer,
-            &m_stride,
-            &m_offset);
-        break;
-    case D3D11_BIND_CONSTANT_BUFFER:
-        deviceContext.m_deviceContext->VSSetConstantBuffers(StartSlot,
-            NumBuffers,
-            &m_buffer);
-        break;
-    default:
-        ERROR("Buffer", "render", "CHECK FOR Unsupported BindFlag");
-        break;
-    }
-}
+                    unsigned int StartSlot,
+                    unsigned int NumBuffers) {
+                    // Renderiza según el tipo de búfer
+                    switch (m_bindFlag) {
+                    case D3D11_BIND_VERTEX_BUFFER:
+                        deviceContext.IASetVertexBuffers(StartSlot,
+                            NumBuffers,
+                            &m_buffer,
+                            &m_stride,
+                            &m_offset);
+                        break;
+                    case D3D11_BIND_CONSTANT_BUFFER:
+                        deviceContext.m_deviceContext->VSSetConstantBuffers(StartSlot,
+                            NumBuffers,
+                            &m_buffer);
+                        break;
+                    default:
+                        ERROR("Buffer", "render", "CHECK FOR Unsupported BindFlag");
+                        break;
+                    }
+                }
 
 void Buffer::render(DeviceContext& deviceContext, DXGI_FORMAT format) {
     // Renderiza el búfer de índices
@@ -120,17 +121,17 @@ void Buffer::render(DeviceContext& deviceContext, DXGI_FORMAT format) {
 }
 
 void Buffer::renderModel(DeviceContext& deviceContext,
-    unsigned int StartSlot,
-    unsigned int NumBuffers) {
-    // Configura los búferes de constantes para el shader de vértices y píxeles
-    deviceContext.m_deviceContext->VSSetConstantBuffers(StartSlot,
-        NumBuffers,
-        &m_buffer);
+                         unsigned int StartSlot,
+                         unsigned int NumBuffers) {
+                          // Configura los búferes de constantes para el shader de vértices y píxeles
+                          deviceContext.m_deviceContext->VSSetConstantBuffers(StartSlot,
+                              NumBuffers,
+                              &m_buffer);
 
-    deviceContext.m_deviceContext->PSSetConstantBuffers(StartSlot,
-        NumBuffers,
-        &m_buffer);
-}
+                          deviceContext.m_deviceContext->PSSetConstantBuffers(StartSlot,
+                              NumBuffers,
+                              &m_buffer);
+                      }
 
 void Buffer::destroy() {
     // Libera el búfer

@@ -4,17 +4,14 @@
 #include "Texture.h"
 
 // Método para inicializar la vista de profundidad y stencil
-void DepthStencilView::init(Device& device, Texture& depthStencil, DXGI_FORMAT format)
-{
+void DepthStencilView::init(Device& device, Texture& depthStencil, DXGI_FORMAT format){
     // Verifica si el dispositivo es válido
-    if (device.m_device == nullptr)
-    {
+    if (device.m_device == nullptr){
         ERROR("DepthStencilView", "init", "CHECK FOR Device device");
         exit(1);
     }
     // Verifica si la textura de profundidad y stencil es válida
-    else if (depthStencil.m_texture == nullptr)
-    {
+    else if (depthStencil.m_texture == nullptr){
         ERROR("DepthStencilView", "init", "CHECK FOR ID3D11Resources* depthStencil");
         exit(1);
     }
@@ -40,13 +37,11 @@ void DepthStencilView::init(Device& device, Texture& depthStencil, DXGI_FORMAT f
 }
 
 // Método para renderizar y limpiar la vista de profundidad y stencil
-void DepthStencilView::render(DeviceContext& deviceContext)
-{
+void DepthStencilView::render(DeviceContext& deviceContext){
     deviceContext.m_deviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 // Método para destruir la vista de profundidad y stencil
-void DepthStencilView::destroy()
-{
+void DepthStencilView::destroy(){
     SAFE_RELEASE(m_DepthStencilView); // Libera el recurso
 }

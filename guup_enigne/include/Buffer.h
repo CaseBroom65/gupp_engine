@@ -5,35 +5,42 @@ class Device;
 class DeviceContext;
 class MeshComponent;
 
-class Buffer
-{
+class Buffer{
 public:
 	Buffer() = default;
 	~Buffer() = default;
 
 	//Inicializa vertex y index buffers
-	void init(Device device, MeshComponent mesh, unsigned int bindFlag);
+	void 
+		init(Device device, MeshComponent mesh, unsigned int bindFlag);
 
 	//Inicializa los Constant Buffers
-	void init(Device device, unsigned int ByteWidth);
+	void 
+		init(Device device, unsigned int ByteWidth);
 
 	//Actualizar logica del Constant Buffer
-	void update(DeviceContext& deviceContex, unsigned int DstSubresource,
-		const D3D11_BOX* pDstBox,
-		const void* pSrcData,
-		unsigned int SrcRowPitch,
-		unsigned int SrcDepthPitch);
+	void 
+		update(DeviceContext& deviceContex, unsigned int DstSubresource,
+							const D3D11_BOX* pDstBox,
+									const void* pSrcData,
+							unsigned int SrcRowPitch,
+						unsigned int SrcDepthPitch);
 	//Actualiza el render en el Buffer
-	void render(DeviceContext& deviceContext, unsigned int StartSlot,
-		unsigned int NumBuffers);
+	void 
+		render(DeviceContext& deviceContext, unsigned int StartSlot,
+								unsigned int NumBuffers);
 	//Actualiza el render index buffer
-	void render(DeviceContext& deviceContext, DXGI_FORMAT format);
-	//Actualiza en render el constant buffer
-	void renderModel(DeviceContext& deviceContext,
-		unsigned int StartSlot,
-		unsigned int NumBuffers);
 
-	void destroy();
+	void 
+		render(DeviceContext& deviceContext, DXGI_FORMAT format);
+	//Actualiza en render el constant buffer
+	void 
+		renderModel(DeviceContext& deviceContext,
+											unsigned int StartSlot,
+											unsigned int NumBuffers);
+
+	void 
+		destroy();
 
 private:
 	void createBuffer(Device& device,

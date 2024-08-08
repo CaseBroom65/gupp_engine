@@ -6,8 +6,7 @@
 #include "Texture.h"
 
 
-void UserInterface::init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
-{
+void UserInterface::init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext){
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -29,8 +28,7 @@ void UserInterface::init(void* window, ID3D11Device* device, ID3D11DeviceContext
 
     //when Viewports are enable we tweak WindowRounding/WindowBg so plataform windows can look identical to regular ones.
     ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable){
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
@@ -48,8 +46,7 @@ void UserInterface::init(void* window, ID3D11Device* device, ID3D11DeviceContext
     toolTipData();
 }
 
-void UserInterface::update()
-{
+void UserInterface::update(){
     //start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
@@ -59,29 +56,25 @@ void UserInterface::update()
     closeApp();
 }
 
-void UserInterface::render()
-{
+void UserInterface::render(){
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     ImGuiIO& io = ImGui::GetIO();
     // Update and Render additional Platform Windows
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable){
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
     }
 }
 
-void UserInterface::destroy()
-{
+void UserInterface::destroy(){
     //Cleanup
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 }
 
-void UserInterface::vec3Control(const std::string& label, float* values, float resetValues, float columnWidth)
-{
+void UserInterface::vec3Control(const std::string& label, float* values, float resetValues, float columnWidth){
 
     ImGuiIO& io = ImGui::GetIO();
     auto boldFont = io.Fonts->Fonts[0];
@@ -144,24 +137,20 @@ void UserInterface::vec3Control(const std::string& label, float* values, float r
 }
 
 void
-UserInterface::menuBar(window window, SwapChain swapChain, Texture& backBuffer) {
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
+UserInterface::menuBar(window window, SwapChain swapChain, Texture& backBuffer){
+    if (ImGui::BeginMainMenuBar()){
+        if (ImGui::BeginMenu("File")) {
             ImGui::MenuItem("New", "Ctrl+N");
             ImGui::MenuItem("Open", "Ctrl+O");
             ImGui::MenuItem("Save", "Ctrl+S");
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Edit"))
-        {
+        if (ImGui::BeginMenu("Edit")){
             ImGui::MenuItem("Copy", "Ctrl+C");
             ImGui::MenuItem("Paste", "Ctrl+V");
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Capture screenshoot"))
-        {
+        if (ImGui::BeginMenu("Capture screenshoot")){
             //Screenshot sc;
             //sc.captureScreenshot(window,swapChain, backBuffer );
             ImGui::EndMenu();
@@ -172,7 +161,7 @@ UserInterface::menuBar(window window, SwapChain swapChain, Texture& backBuffer) 
 }
 
 void
-UserInterface::Renderer(window window, ID3D11ShaderResourceView* renderTexture) {
+UserInterface::Renderer(window window, ID3D11ShaderResourceView* renderTexture){
     bool Stage = true;
     ImGui::Begin("Renderer", &Stage, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
     ImTextureID texId = (ImTextureID)renderTexture;

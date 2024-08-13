@@ -2,7 +2,7 @@
 es para la clase de arquitectura de motores graficos.
 
 # Descripción total
-EngineIAM es un motor gráfico en desarrollo que utiliza Direct3D 11, una API de gráficos 3D de alto rendimiento proporcionada por Microsoft. Está diseñado para ofrecer una base sólida para la creación de aplicaciones gráficas y videojuegos, facilitando la gestión y manipulación de recursos gráficos como texturas, shaders y buffers.
+Guup_engine es un motor gráfico en desarrollo que utiliza Direct3D 11, una API de gráficos 3D de alto rendimiento proporcionada por Microsoft. Está diseñado para ofrecer una base sólida para la creación de aplicaciones gráficas y videojuegos, facilitando la gestión y manipulación de recursos gráficos como texturas, shaders y buffers.
 
 # Características
 Gestión de Dispositivos y Contextos:
